@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domora — нерухомість, якій довіряють</title>
+<script>
+  // Стабільний перший кадр: висота hero й позиція сторінки відомі до малювання.
+  document.documentElement.classList.add('hero-pending');
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  document.documentElement.style.setProperty('--vh',
+    ((window.visualViewport && window.visualViewport.height) || window.innerHeight) + 'px');
+  // Навігація лишається доступною, навіть якщо основний скрипт не запуститься.
+  setTimeout(() => document.documentElement.classList.remove('hero-pending'), 2000);
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap"></noscript>
+<link rel="preload" as="image" href="hero-poster.jpg">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:            #15150f;
+  --bg-soft:       #1b1b13;
+  --surface-glass: rgba(255,255,255,0.06);
+  --surface-glass-strong: rgba(255,255,255,0.10);
+  --border-glass:  rgba(255,255,255,0.14);
+  --text-primary:  #f4f2ea;
+  --text-secondary:#b7b3a5;
+  --accent:        #d9a15b;
+  --accent-soft:   rgba(217,161,91,0.16);
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --font-head: 'Space Grotesk', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+  --container: 1240px;
+  --gap: clamp(16px, 3vw, 32px);
+}
+
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { display:block; width:100%; height:100%; object-fit:cover; }
+a { color:inherit; text-decoration:none; }
+ul { list-style:none; }
+button { font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+
+.wrap { max-width:var(--container); margin-inline:auto; padding-inline:clamp(20px,5vw,48px); }
+
+.glass {
+  background:var(--surface-glass);
+  border:1px solid var(--border-glass);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-radius:var(--radius-md);
+}
+
+/* ============================================================
+  🔒 НЕ ЧІПАЙ — SCROLL ENGINE
+============================================================ */
+#scroll-container {
+  position: relative;
+  height: calc(var(--vh, 100vh) * 2);
+}
+
+/* ============================================================
+  🔒 НЕ ЧІПАЙ — HERO (sticky відео секція)
+============================================================ */
+#hero {
+  position: sticky;
+  top: 0;
+  height: var(--vh, 100vh);
+  width: 100%;
+  overflow: hidden;
+  background: #c7c8d3 url('hero-poster.jpg') center / cover no-repeat;
+  z-index: 1;
+}
+
+#bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  visibility: hidden;
+  transform-origin: center center;
+}
+#bg-video.is-ready { visibility: visible; }
+
+#hero-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+#hero-poster.is-hidden { opacity: 0; }
+
+#hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.22) 42%, transparent 76%),
+    linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, transparent 42%, rgba(0,0,0,0.55) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ✏️ навігація — плаваюча скляна панель поверх усього сайту */
+header {
+  position: fixed;
+  top:0; left:0; right:0; z-index:50;
+  padding: 18px clamp(20px,5vw,48px);
+}
+html.hero-pending header { visibility: hidden; }
+.nav-inner {
+  max-width: var(--container); margin-inline:auto;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 12px 22px;
+  background: rgba(15,15,10,0.62);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-radius: var(--radius-md);
+}
+.logo { font-family:var(--font-head); font-weight:600; font-size:1.2rem; display:flex; align-items:center; gap:8px; color:#fff; text-decoration:none; }
+.logo span { color:var(--accent); }
+header nav ul { display:flex; gap:32px; }
+header nav a { font-size:0.95rem; font-weight:600; color:rgba(244,242,234,0.92); transition:color .2s; }
+header nav a:hover { color:var(--accent); }
+
+.burger { display:none; width:40px; height:40px; align-items:center; justify-content:center; border-radius:50%; color:#fff; background:rgba(15,15,10,0.55); border:1px solid rgba(255,255,255,0.2); }
+.burger svg { width:20px; height:20px; }
+
+.mobile-menu {
+  display:none;
+  position:fixed; inset:0; z-index:60;
+  background:rgba(10,10,7,0.92);
+  backdrop-filter:blur(20px);
+  flex-direction:column; align-items:center; justify-content:center; gap:28px;
+}
+.mobile-menu.open { display:flex; }
+.mobile-menu a { font-family:var(--font-head); font-size:1.6rem; color:#fff; }
+.mobile-menu .close { position:absolute; top:24px; right:24px; width:44px; height:44px; color:#fff; }
+
+@media (max-width:1000px){
+  header nav, .btn-ghost.desktop-only { display:none; }
+  .burger { display:flex; }
+}
+
+/* ✏️ контент hero */
+#hero-content {
+  position: absolute;
+  top: clamp(160px, 22vh, 250px);
+  left: clamp(24px, 5vw, 70px);
+  right: clamp(24px, 5vw, 70px);
+  max-width: 680px;
+  z-index: 5;
+  will-change: transform, opacity;
+}
+
+.hero-title {
+  font-family: var(--font-head);
+  font-size: clamp(44px, 5.4vw, 78px);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+  color: #fff;
+  max-width: 650px;
+  text-shadow: 0 2px 28px rgba(0,0,0,0.38);
+}
+.hero-title span {
+  color: #f2e7d8;
+  font-weight: 500;
+}
+
+.hero-sub {
+  margin-top: 22px;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  max-width: 460px;
+  line-height: 1.6;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.5);
+}
+
+#scroll-hint {
+  position: absolute;
+  bottom: 72px;
+  right: 48px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.4;
+}
+#scroll-hint span {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+  writing-mode: vertical-rl;
+}
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
+  animation: scrollLine 1.8s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ✏️ текст що з'являється в середині скролу */
+#hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+.hero-overlay-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.hero-overlay-title {
+  font-family: var(--font-head);
+  font-size: clamp(40px, 5.5vw, 80px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: #fff;
+  text-shadow: 0 2px 28px rgba(0,0,0,0.42);
+}
+
+/* ============================================================
+  СЕКЦІЇ ПІСЛЯ HERO — контент Domora
+============================================================ */
+section { padding: clamp(70px,10vw,120px) 0; }
+.statement, #categories, #listings, #testimonials, #about-stats, #blog {
+  padding-block:clamp(40px,5vw,60px);
+}
+.section-head { max-width:640px; margin-bottom:48px; }
+.eyebrow { color:var(--accent); font-weight:600; letter-spacing:0.02em; margin-bottom:14px; font-size:0.95rem; }
+.section-head .eyebrow { margin-bottom:12px; }
+.section-head h2 { font-family:var(--font-head); font-size:clamp(1.8rem,3.4vw,2.6rem); font-weight:600; line-height:1.15; }
+.section-head p { color:var(--text-secondary); margin-top:14px; }
+
+.btn { display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:999px; font-size:0.9rem; font-weight:600; transition:transform .2s ease, background .2s ease; }
+.btn-primary { background:var(--accent); color:#1a1408; }
+.btn-primary:hover { transform:translateY(-2px); }
+.btn-ghost { border:1px solid rgba(255,255,255,0.28); color:#fff; }
+.btn-ghost:hover { background:var(--surface-glass-strong); }
+
+/* statement */
+.statement { background:var(--bg-soft); }
+.statement .wrap { text-align:center; }
+.statement p { font-family:var(--font-head); font-weight:500; font-size:clamp(1.6rem, 4vw, 2.6rem); line-height:1.25; max-width:900px; margin-inline:auto; }
+.statement p em { color:var(--accent); font-style:normal; }
+
+/* categories */
+.cat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--gap); }
+.cat-card { padding:28px; transition:transform .25s ease, background .25s ease; }
+.cat-card:hover { transform:translateY(-6px); background:var(--surface-glass-strong); }
+.cat-card .num { color:var(--text-secondary); font-size:0.85rem; margin-bottom:26px; display:block; }
+.cat-card h3 { font-family:var(--font-head); font-size:1.15rem; margin-bottom:8px; }
+.cat-card p { color:var(--text-secondary); font-size:0.9rem; }
+
+/* listings */
+.listing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); }
+.listing-card { display:flex; flex-direction:column; gap:16px; }
+.listing-card .img-wrap { aspect-ratio:4/3; overflow:hidden; border-radius:var(--radius-md); background:var(--bg-soft); }
+.listing-card .img-wrap img { transition:transform .5s ease; }
+.listing-card:hover .img-wrap img { transform:scale(1.06); }
+.listing-info {
+  padding:0 2px 4px;
+}
+.listing-info .top-row { display:flex; justify-content:space-between; align-items:flex-start; gap:18px; margin-bottom:12px; }
+.listing-info h3 { font-family:var(--font-head); font-size:1.08rem; line-height:1.3; color:var(--text-primary); }
+.listing-info .price { color:var(--accent); font-weight:700; font-size:1.05rem; white-space:nowrap; }
+.listing-info .meta { display:flex; flex-wrap:wrap; gap:8px; }
+.listing-info .meta span {
+  display:inline-flex;
+  align-items:center;
+  min-height:32px;
+  padding:6px 12px;
+  border:1px solid var(--border-glass);
+  border-radius:999px;
+  background:var(--surface-glass);
+  color:var(--text-secondary);
+  font-size:0.8rem;
+  font-weight:500;
+}
+
+/* testimonials */
+.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); }
+.testi-card {
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  overflow:hidden;
+  border-radius:var(--radius-lg);
+  background:var(--bg-soft);
+  border:1px solid var(--border-glass);
+}
+.testi-photo {
+  position:relative;
+  aspect-ratio:3/2;
+  background:#10100d;
+  overflow:hidden;
+}
+.testi-photo::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom, rgba(8,8,5,0.28), transparent 38%);
+  pointer-events:none;
+}
+.testi-card .property-photo {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.testi-top {
+  position:absolute;
+  top:18px;
+  left:18px;
+  right:18px;
+  z-index:1;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.testi-card .who {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:6px 13px 6px 6px;
+  background:rgba(16,16,11,0.62);
+  border:1px solid rgba(255,255,255,0.22);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-radius:999px;
+}
+.testi-card .who .ph {
+  width:48px;
+  height:48px;
+  border:2px solid rgba(255,255,255,0.72);
+  border-radius:50%;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.testi-card .name { color:#fff; font-weight:700; font-size:0.86rem; }
+.testi-card .sub { color:rgba(255,255,255,0.68); font-size:0.72rem; }
+.testi-content {
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  padding:22px;
+  background:rgba(255,255,255,0.035);
+  border-top:1px solid var(--border-glass);
+}
+.purchase-meta { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
+.purchase-meta span {
+  padding:5px 9px;
+  color:#f3dfc3;
+  background:var(--accent-soft);
+  border:1px solid rgba(217,161,91,0.34);
+  border-radius:999px;
+  font-size:0.7rem;
+  font-weight:600;
+}
+.testi-card blockquote {
+  margin-bottom:20px;
+  padding-left:16px;
+  border-left:2px solid var(--accent);
+  color:var(--text-primary);
+  font-size:clamp(.95rem,1.1vw,1rem);
+  line-height:1.65;
+}
+.review-footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:auto;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,0.13);
+  color:rgba(255,255,255,0.58);
+  font-size:0.72rem;
+}
+.review-stars { color:var(--accent); letter-spacing:0.12em; font-size:0.78rem; }
+.testi-note { margin-top:20px; color:var(--text-secondary); font-size:0.78rem; }
+
+/* about stats */
+.stats-panel { display:flex; align-items:center; justify-content:space-between; padding:clamp(28px,4vw,48px); }
+.stat-item { flex:1; text-align:center; padding:0 12px; position:relative; }
+.stat-item + .stat-item::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:1px; height:56px; background:var(--border-glass); }
+.stat-item .num { font-family:var(--font-head); font-size:clamp(2.1rem,4.5vw,3.2rem); font-weight:700; color:var(--accent); line-height:1; }
+.stat-item .label { color:var(--text-secondary); font-size:0.88rem; margin-top:10px; }
+
+/* blog */
+.blog-more { display:flex; justify-content:center; margin-top:40px; }
+.blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); }
+.blog-card { overflow:hidden; }
+.blog-card .img-wrap { aspect-ratio:16/10; overflow:hidden; }
+.blog-card .body { padding:22px; }
+.blog-card .tag { color:var(--accent); font-size:0.78rem; font-weight:600; margin-bottom:10px; display:block; }
+.blog-card h3 { font-family:var(--font-head); font-size:1.05rem; margin-bottom:8px; line-height:1.3; }
+.blog-card p { color:var(--text-secondary); font-size:0.88rem; }
+
+/* CTA та футер */
+.site-end {
+  --end-accent:#d5a468;
+  --end-muted:#a8aaa3;
+  color:#fff;
+  font-family:'Inter', var(--font-body);
+  background:linear-gradient(to bottom, rgba(20,21,17,0.78), rgba(20,21,17,0.96)), url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+}
+.site-end .contact-section { padding:clamp(40px,5vw,60px) 0 0; }
+.end-cta {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:32px;
+  padding:clamp(32px,5vw,60px);
+  background:rgba(32,34,28,0.85);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.4);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.end-cta-copy { max-width:600px; }
+.end-cta h2 { font-family:inherit; font-size:clamp(1.7rem,3.2vw,2.5rem); font-weight:700; line-height:1.2; }
+.end-cta p { margin-top:15px; color:var(--end-muted); font-size:1.05rem; }
+.end-cta-link {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  padding:18px 32px;
+  border-radius:50px;
+  background:var(--end-accent);
+  color:#111;
+  font-size:1rem;
+  font-weight:600;
+  white-space:nowrap;
+  transition:background .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+.end-cta-link:hover { background:#e6b67b; transform:translateY(-3px); box-shadow:0 5px 20px rgba(213,164,104,0.3); }
+.site-footer { margin-top:80px; padding:60px 0 0; border-top:1px solid rgba(255,255,255,0.08); }
+.end-footer-grid { display:grid; grid-template-columns:2fr repeat(3,1fr); gap:40px; margin-bottom:32px; }
+.end-brand-logo { display:inline-flex; align-items:center; font-size:1.5rem; font-weight:700; line-height:1; letter-spacing:.5px; }
+.end-brand-logo .diamond { margin-right:8px; font-size:.9rem; }
+.end-brand-logo .ora { margin-left:5px; color:var(--end-accent); }
+.end-brand-desc { max-width:250px; margin-top:20px; color:var(--end-muted); font-size:.94rem; line-height:1.6; }
+.end-footer-col h4 { margin-bottom:25px; color:var(--end-muted); font-size:.875rem; font-weight:500; }
+.end-footer-col li { margin-bottom:15px; }
+.end-footer-col a, .end-footer-col .plain-text { color:#fff; font-size:.94rem; transition:color .3s ease; }
+.end-footer-col a:hover { color:var(--end-accent); }
+.end-giant-logo {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  padding:14px 0 20px;
+  overflow:hidden;
+  color:rgba(255,255,255,0.9);
+  font-size:14vw;
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+  user-select:none;
+}
+.end-giant-logo .diamond { margin-right:1.5vw; font-size:9vw; }
+.end-giant-logo .ora { margin-left:2vw; color:var(--end-accent); }
+.end-copyright { padding-bottom:20px; color:rgba(168,170,163,0.7); font-size:.8rem; text-align:center; }
+
+@media (prefers-reduced-motion: reduce) { *{ animation:none !important; scroll-behavior:auto !important; } }
+
+/* ============================================================
+  МОБАЙЛ — hero
+============================================================ */
+@media (max-width: 768px) {
+  header { padding: 14px 16px; }
+  .nav-inner { padding: 10px 16px; }
+  #hero-content { top: clamp(120px, 18vh, 180px); left: 20px; right: 20px; }
+  #scroll-hint { display: none; }
+  .hero-title { font-size: clamp(32px, 7.7vw, 52px); }
+  .hero-sub { font-size: 14px; margin-top: 16px; max-width: 360px; }
+  #hero-overlay { padding: 24px; }
+  .hero-overlay-title { font-size: clamp(32px, 9vw, 52px); }
+  .hero-overlay-label { margin-bottom: 12px; }
+}
+
+/* ПЛАНШЕТ — відгуки в один ряд за одним, фото поруч із цитатою */
+@media (max-width:1100px) {
+  .testi-grid { grid-template-columns:1fr; max-width:900px; margin-inline:auto; gap:20px; }
+  .testi-card { display:grid; grid-template-columns:minmax(0,42%) minmax(0,1fr); }
+  .testi-photo { aspect-ratio:auto; min-height:300px; }
+  .testi-content { min-width:0; border-top:0; border-left:1px solid var(--border-glass); }
+}
+
+/* МОБАЙЛ — секції контенту */
+@media (max-width:1000px) {
+  .cat-grid { grid-template-columns:repeat(2,1fr); }
+  .listing-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:900px) {
+  .end-cta { flex-direction:column; align-items:stretch; text-align:center; }
+  .end-cta-link { width:100%; }
+  .end-footer-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:600px) {
+  .cat-grid, .listing-grid, .blog-grid { grid-template-columns:1fr; }
+  .end-footer-grid { grid-template-columns:1fr; gap:28px; text-align:center; }
+  .end-brand-desc { margin-inline:auto; }
+  .site-footer { margin-top:60px; }
+  .end-giant-logo { font-size:14vw; }
+  .end-giant-logo .diamond { font-size:9vw; }
+  .stats-panel { flex-direction:column; gap:24px; }
+  .stat-item + .stat-item::before { display:none; }
+}
+@media (max-width:700px) {
+  .testi-card { display:flex; }
+  .testi-photo { aspect-ratio:3/2; min-height:0; }
+  .testi-content { padding:20px; border-top:1px solid var(--border-glass); border-left:0; }
+  .testi-card blockquote { font-size:1rem; line-height:1.6; }
+  .testi-top { top:14px; left:14px; right:14px; }
+  .testi-card .who .ph { width:42px; height:42px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="#hero" class="logo">◆ Dom<span>ora</span></a>
+    <nav>
+      <ul>
+        <li><a href="#hero">Головна</a></li>
+        <li><a href="#listings">Об'єкти</a></li>
+        <li><a href="#testimonials">Відгуки</a></li>
+        <li><a href="blog.html">Блог</a></li>
+        <li><a href="#contact">Контакти</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="btn btn-primary desktop-only">Забронювати перегляд</a>
+    <button class="burger" aria-label="Відкрити меню" onclick="document.getElementById('mmenu').classList.add('open')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mmenu">
+  <button class="close" aria-label="Закрити меню" onclick="document.getElementById('mmenu').classList.remove('open')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;margin:auto;"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+  </button>
+  <a href="#hero" onclick="document.getElementById('mmenu').classList.remove('open')">Головна</a>
+  <a href="#listings" onclick="document.getElementById('mmenu').classList.remove('open')">Об'єкти</a>
+  <a href="#testimonials" onclick="document.getElementById('mmenu').classList.remove('open')">Відгуки</a>
+  <a href="blog.html" onclick="document.getElementById('mmenu').classList.remove('open')">Блог</a>
+  <a href="#contact" class="btn btn-primary" onclick="document.getElementById('mmenu').classList.remove('open')">Забронювати перегляд</a>
+</div>
+
+<!-- ===========================================================
+  🔒 НЕ ЧІПАЙ — scroll-container START
+=========================================================== -->
+<div id="scroll-container">
+
+  <section id="hero">
+    <!-- 🔒 НЕ ЧІПАЙ src і id — тільки заміни URL відео -->
+    <template id="hero-video-template">
+      <video
+        id="bg-video"
+        src="https://res.cloudinary.com/aauoluph/video/upload/v1789153137/Living_room_overlooking_sea_terrace_20260911200919.mp4"
+        poster="hero-poster.jpg"
+        muted
+        playsinline
+        preload="auto"
+      ></video>
+    </template>
+    <img id="hero-poster" src="hero-poster.jpg" alt="" aria-hidden="true" fetchpriority="high">
+
+    <div id="hero-content">
+      <h1 class="hero-title">
+        Знайдіть простір,<br>
+        <span>де хочеться жити</span>
+      </h1>
+      <p class="hero-sub">Ми підбираємо будинки та квартири під ваш спосіб життя — без зайвих переглядів і втраченого часу.</p>
+    </div>
+
+    <div id="scroll-hint">
+      <span>scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+
+    <div id="hero-overlay">
+      <p class="hero-overlay-label">Наша філософія</p>
+      <h2 class="hero-overlay-title">Дім — це не<br>квадратні метри</h2>
+    </div>
+  </section>
+
+</div>
+<!-- ===========================================================
+  🔒 НЕ ЧІПАЙ — scroll-container END
+=========================================================== -->
+
+<section class="statement">
+  <div class="wrap">
+    <p>Дім — це не квадратні метри. Це <em>світло вранці</em>, тиша ввечері й простір, який відповідає тому, як ви живете.</p>
+  </div>
+</section>
+
+<section id="categories">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Категорії</div>
+      <h2>Що ви шукаєте?</h2>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card glass">
+        <span class="num">01</span>
+        <h3>Квартири</h3>
+        <p>Від студій до просторих пентхаусів у центрі та нових районах.</p>
+      </div>
+      <div class="cat-card glass">
+        <span class="num">02</span>
+        <h3>Будинки</h3>
+        <p>Приватні садиби та сучасні котеджі з ділянкою.</p>
+      </div>
+      <div class="cat-card glass">
+        <span class="num">03</span>
+        <h3>Комерція</h3>
+        <p>Приміщення під офіс, торгівлю чи сервіс у прохідних локаціях.</p>
+      </div>
+      <div class="cat-card glass">
+        <span class="num">04</span>
+        <h3>Ділянки</h3>
+        <p>Земля під будівництво з готовими комунікаціями поруч.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="listings">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Обрані пропозиції</div>
+      <h2>Об'єкти, які варто побачити наживо</h2>
+      <p>Кожен перевірений нашою командою: документи, стан будинку, реальні фото без фільтрів.</p>
+    </div>
+    <div class="listing-grid">
+      <div class="listing-card">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1667830501890-f18c74a8efac?auto=format&fit=crop&w=900&q=80" alt="Будинок з басейном та панорамним склінням увечері" loading="lazy" decoding="async"></div>
+        <div class="listing-info">
+          <div class="top-row"><h3>Вілла Панорама</h3><span class="price">4,1 млн ₴</span></div>
+          <div class="meta"><span>180 м²</span><span>4 кімнати</span><span>Мукачево</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&fit=crop&w=900&q=80" alt="Сучасна вітальня з каміном і теплим освітленням" loading="lazy" decoding="async"></div>
+        <div class="listing-info">
+          <div class="top-row"><h3>Лофт на Корзо</h3><span class="price">2,3 млн ₴</span></div>
+          <div class="meta"><span>76 м²</span><span>2 кімнати</span><span>Ужгород</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1642447260162-8d52ac4348ad?auto=format&fit=crop&w=900&q=80" alt="Заміський будинок з підсвіткою у сутінках" loading="lazy" decoding="async"></div>
+        <div class="listing-info">
+          <div class="top-row"><h3>Хата біля лісу</h3><span class="price">1,8 млн ₴</span></div>
+          <div class="meta"><span>95 м²</span><span>3 кімнати</span><span>Свалява</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80" alt="Білий сучасний будинок з великими вікнами" loading="lazy" decoding="async"></div>
+        <div class="listing-info">
+          <div class="top-row"><h3>Вілла Аврора</h3><span class="price">3,6 млн ₴</span></div>
+          <div class="meta"><span>160 м²</span><span>4 кімнати</span><span>Берегове</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80" alt="Простора вітальня з дерев'яними елементами" loading="lazy" decoding="async"></div>
+        <div class="listing-info">
+          <div class="top-row"><h3>Апартаменти Дубова</h3><span class="price">2,1 млн ₴</span></div>
+          <div class="meta"><span>64 м²</span><span>2 кімнати</span><span>Виноградів</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=900&q=80" alt="Будинок з басейном та терасою вдень" loading="lazy" decoding="async"></div>
+        <div class="listing-info">
+          <div class="top-row"><h3>Садиба Панорама</h3><span class="price">5,2 млн ₴</span></div>
+          <div class="meta"><span>210 м²</span><span>5 кімнат</span><span>Хуст</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Відгуки</div>
+      <h2>Що кажуть ті, хто вже знайшов свій дім</h2>
+      <p>Історії людей, яким ми допомогли пройти шлях від першого перегляду до власних ключів.</p>
+    </div>
+    <div class="testi-grid">
+      <article class="testi-card">
+        <div class="testi-photo">
+          <img class="property-photo" src="https://images.unsplash.com/photo-1703782997454-8eb0d4d94e9c?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Дерев'яний будинок серед дерев" loading="lazy" decoding="async">
+          <div class="testi-top">
+            <div class="who">
+              <div class="ph"><img src="https://images.unsplash.com/photo-1663550910287-0c92a030feab?auto=format&amp;fit=crop&amp;w=160&amp;h=160&amp;q=82&amp;crop=faces" alt="Ілюстративний портрет жінки" loading="lazy" decoding="async"></div>
+              <div><div class="name">Наталя П.</div><div class="sub">власниця будинку</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-content">
+          <div class="purchase-meta"><span>Мукачево</span><span>Будинок · 180 м²</span></div>
+          <blockquote>«Хотілося тиші, багато світла й ліс поруч, але без довгих поїздок до міста. Команда відсіяла десятки варіантів і показала лише чотири. Цей будинок ми обрали в перший же день».</blockquote>
+          <div class="review-footer"><span class="review-stars" aria-label="Оцінка 5 із 5">★★★★★</span><span>Ключі отримано у 2026</span></div>
+        </div>
+      </article>
+
+      <article class="testi-card">
+        <div class="testi-photo">
+          <img class="property-photo" src="https://images.unsplash.com/photo-1757356664215-4302d5b4a92d?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Сучасний будинок у зеленому саду ввечері" loading="lazy" decoding="async">
+          <div class="testi-top">
+            <div class="who">
+              <div class="ph"><img src="https://images.unsplash.com/photo-1534399315465-2b91232de345?auto=format&amp;fit=crop&amp;w=160&amp;h=160&amp;q=82&amp;crop=faces" alt="Ілюстративний портрет чоловіка" loading="lazy" decoding="async"></div>
+              <div><div class="name">Роман К.</div><div class="sub">власник будинку</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-content">
+          <div class="purchase-meta"><span>Ужгород</span><span>Будинок · 142 м²</span></div>
+          <blockquote>«Я був за кордоном і хвилювався, що дистанційна купівля перетвориться на нескінченні дзвінки. Domora перевірила документи, організувала відеоперегляди й чесно показала всі нюанси».</blockquote>
+          <div class="review-footer"><span class="review-stars" aria-label="Оцінка 5 із 5">★★★★★</span><span>Угоду закрито за 18 днів</span></div>
+        </div>
+      </article>
+
+      <article class="testi-card">
+        <div class="testi-photo">
+          <img class="property-photo" src="https://images.unsplash.com/photo-1704457031745-fe39ed2d296c?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Сучасний дерев'яний будинок із садом" loading="lazy" decoding="async">
+          <div class="testi-top">
+            <div class="who">
+              <div class="ph"><img src="https://images.unsplash.com/photo-1548382131-e0ebb1f0cdea?auto=format&amp;fit=crop&amp;w=160&amp;h=160&amp;q=82&amp;crop=faces" alt="Ілюстративний портрет жінки" loading="lazy" decoding="async"></div>
+              <div><div class="name">Софія В.</div><div class="sub">власниця будинку</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-content">
+          <div class="purchase-meta"><span>Свалява</span><span>Будинок · 126 м²</span></div>
+          <blockquote>«Мені сподобалося, що агент не приховував недоліків і пояснив, скільки реально коштуватиме ремонт. Завдяки цьому я спокійно прийняла рішення й залишилася в межах бюджету».</blockquote>
+          <div class="review-footer"><span class="review-stars" aria-label="Оцінка 5 із 5">★★★★★</span><span>Переїзд у серпні 2026</span></div>
+        </div>
+      </article>
+    </div>
+    <p class="testi-note">Демонстраційні історії для портфоліо: імена, відгуки та характеристики будинків вигадані. Фотографії ілюстративні.</p>
+  </div>
+</section>
+
+<section id="about-stats">
+  <div class="wrap">
+    <div class="stats-panel glass">
+      <div class="stat-item">
+        <div class="num">180+</div>
+        <div class="label">об'єктів у каталозі</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">8</div>
+        <div class="label">років на ринку нерухомості</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">540+</div>
+        <div class="label">підписаних угод</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="blog">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Блог</div>
+      <h2>Перш ніж підписати договір</h2>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card glass">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1763729805496-b5dbf7f00c79?auto=format&fit=crop&w=700&q=80" alt="Підписання документів на нерухомість" loading="lazy" decoding="async"></div>
+        <div class="body">
+          <span class="tag">Юридичні поради</span>
+          <h3>5 документів, які варто перевірити перед покупкою</h3>
+          <p>Що просити у власника і на що звертати увагу нотаріусу.</p>
+        </div>
+      </div>
+      <div class="blog-card glass">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1728825445493-1a6e89164511?auto=format&fit=crop&w=700&q=80" alt="Калькулятор та макет будинку для розрахунку іпотеки" loading="lazy" decoding="async"></div>
+        <div class="body">
+          <span class="tag">Фінанси</span>
+          <h3>Як порахувати реальну вартість іпотеки</h3>
+          <p>Приховані платежі, які часто не враховують у розрахунках.</p>
+        </div>
+      </div>
+      <div class="blog-card glass">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1637119106192-036fbe26d38d?auto=format&fit=crop&w=700&q=80" alt="Вигляд на житловий район з висоти" loading="lazy" decoding="async"></div>
+        <div class="body">
+          <span class="tag">Огляди районів</span>
+          <h3>Де в Ужгороді варто шукати квартиру в 2026</h3>
+          <p>Інфраструктура, ціни та плани забудови по районах.</p>
+        </div>
+      </div>
+    </div>
+    <div class="blog-more">
+      <a href="blog.html" class="btn btn-ghost">Переглянути всі статті</a>
+    </div>
+  </div>
+</section>
+
+<div class="site-end">
+  <section id="contact" class="contact-section">
+    <div class="wrap">
+      <div class="end-cta">
+        <div class="end-cta-copy">
+          <h2>Не знайшли свій варіант серед оголошень?</h2>
+          <p>Опишіть, що шукаєте — підберемо варіанти, яких ще немає в загальному каталозі.</p>
+        </div>
+        <a href="mailto:hello@domora.ua" class="end-cta-link">Розказати, що я шукаю</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="end-footer-grid">
+        <div class="end-footer-col">
+          <a href="#hero" class="end-brand-logo"><span class="diamond">◆</span><span>Dom</span><span class="ora">ora</span></a>
+          <p class="end-brand-desc">Агенція нерухомості в Закарпатті.<br>Підбираємо, перевіряємо, супроводжуємо угоду до кінця.</p>
+        </div>
+        <div class="end-footer-col">
+          <h4>Розділи</h4>
+          <ul>
+            <li><a href="#listings">Об'єкти</a></li>
+            <li><a href="#testimonials">Відгуки</a></li>
+            <li><a href="blog.html">Блог</a></li>
+          </ul>
+        </div>
+        <div class="end-footer-col">
+          <h4>Контакти</h4>
+          <ul>
+            <li><a href="tel:+380000000000">+380 (00) 000-00-00</a></li>
+            <li><a href="mailto:hello@domora.ua">hello@domora.ua</a></li>
+            <li><span class="plain-text">м. Ужгород, вул. Корзо, 1</span></li>
+          </ul>
+        </div>
+        <div class="end-footer-col">
+          <h4>Соцмережі</h4>
+          <ul>
+            <li><span class="plain-text">Instagram</span></li>
+            <li><span class="plain-text">Facebook</span></li>
+            <li><span class="plain-text">Telegram</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="end-giant-logo" aria-hidden="true"><span class="diamond">◆</span><span>DOM<span class="ora">ORA</span></span></div>
+    <div class="end-copyright">© 2026 Domora. Усі права захищено.</div>
+  </footer>
+</div>
+
+<!-- ===========================================================
+  🔒 НЕ ЧІПАЙ — JS ENGINE
+  Scroll-driven відео + overlay текст
+=========================================================== -->
+<script>
+  // -- vh фікс --
+  function setVh() {
+    const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    document.documentElement.style.setProperty('--vh', h + 'px');
+  }
+  setVh();
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(setVh, 150);
+  });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(setVh, 150);
+    });
+  }
+
+  const videoTemplate   = document.getElementById('hero-video-template');
+  const video           = videoTemplate.content.querySelector('#bg-video');
+  const heroPoster      = document.getElementById('hero-poster');
+  const heroContent     = document.getElementById('hero-content');
+  const heroOverlay     = document.getElementById('hero-overlay');
+  const scrollContainer = document.getElementById('scroll-container');
+
+  let videoReady   = false;
+  let targetTime   = 0;
+  let currentTime  = 0;
+  let seekLocked   = false;
+  let lastProgress = -1;
+
+  let heroStarted = false;
+  function startHero() {
+    if (heroStarted) return;
+    heroStarted = true;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => document.documentElement.classList.remove('hero-pending'));
+    });
+    videoTemplate.replaceWith(video);
+    video.addEventListener('loadedmetadata', () => {
+      videoReady = true;
+      lastProgress = -1;
+      updateHeroAnimation(window.scrollY);
+    });
+    video.addEventListener('seeked', () => {
+      requestAnimationFrame(() => {
+        video.classList.add('is-ready');
+        heroPoster.classList.add('is-hidden');
+      });
+    }, { once: true });
+    video.load();
+  }
+
+  // Додаємо відео після декодування локального кадру.
+  // Таймер не дає затримати відео, якщо зображення недоступне.
+  if (heroPoster.decode) {
+    heroPoster.decode().then(startHero, startHero);
+  } else if (heroPoster.complete) {
+    startHero();
+  } else {
+    heroPoster.addEventListener('load', startHero, { once: true });
+    heroPoster.addEventListener('error', startHero, { once: true });
+  }
+  setTimeout(startHero, 1500);
+
+  function doSeek() {
+    if (!videoReady || !video.duration) return;
+    if (Math.abs(targetTime - currentTime) < 0.05) { seekLocked = false; return; }
+    seekLocked  = true;
+    currentTime = targetTime;
+    if ('requestVideoFrameCallback' in video) {
+      video.requestVideoFrameCallback(() => { seekLocked = false; doSeek(); });
+    } else {
+      video.addEventListener('seeked', function onSeeked() {
+        video.removeEventListener('seeked', onSeeked);
+        seekLocked = false;
+        doSeek();
+      }, { once: true });
+    }
+    video.currentTime = currentTime;
+  }
+
+  const isMobile = () => window.matchMedia('(pointer: coarse)').matches;
+
+  const EASE = 0.09;
+  let targetScrollY = 0;
+  let smoothScrollY = 0;
+
+  function maxScroll() {
+    return Math.max(0, document.body.scrollHeight - window.innerHeight);
+  }
+
+  function anchorPosition(target) {
+    const headerOffset = 104;
+    return Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerOffset);
+  }
+
+  function initialAnchor() {
+    if (!window.location.hash || window.location.hash === '#') return null;
+    try {
+      return document.querySelector(window.location.hash);
+    } catch {
+      return null;
+    }
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', event => {
+      const href = link.getAttribute('href');
+      if (!href || href === '#') return;
+
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      event.preventDefault();
+      const destination = Math.min(anchorPosition(target), maxScroll());
+
+      if (isMobile()) {
+        window.scrollTo({ top: destination, behavior: 'smooth' });
+      } else {
+        targetScrollY = destination;
+      }
+
+      history.replaceState(null, '', href);
+    });
+  });
+
+  function updateHeroAnimation(scrollY) {
+    const trackH = scrollContainer.offsetHeight - window.innerHeight;
+    if (trackH <= 0) return;
+    const progress = Math.max(0, Math.min(1, scrollY / trackH));
+
+    if (Math.abs(progress - lastProgress) < 0.0001) return;
+    lastProgress = progress;
+
+    if (videoReady && video.duration) {
+      targetTime = progress * video.duration;
+      if (!seekLocked) doSeek();
+    }
+
+    const textP = Math.min(1, progress / 0.35);
+    const ease  = textP < 0.5 ? 2*textP*textP : 1 - Math.pow(-2*textP+2, 2) / 2;
+    heroContent.style.transform = `translateY(${ease * -48}px)`;
+    heroContent.style.opacity   = (1 - ease).toFixed(3);
+
+    const ovIn  = Math.max(0, Math.min(1, (progress - 0.35) / 0.15));
+    const ovOut = Math.max(0, Math.min(1, (progress - 0.55) / 0.12));
+    const ovEaseIn  = ovIn  < 0.5 ? 2*ovIn*ovIn   : 1 - Math.pow(-2*ovIn+2,  2)/2;
+    const ovEaseOut = ovOut < 0.5 ? 2*ovOut*ovOut  : 1 - Math.pow(-2*ovOut+2, 2)/2;
+    const ovOpacity = ovEaseIn * (1 - ovEaseOut);
+    const ovY = (1 - ovEaseIn) * 30 + ovEaseOut * -30;
+    heroOverlay.style.opacity   = ovOpacity.toFixed(3);
+    heroOverlay.style.transform = isMobile() ? 'none' : `translateY(${ovY}px)`;
+  }
+
+  if (isMobile()) {
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+
+    const target = initialAnchor();
+    if (target) {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, Math.min(anchorPosition(target), maxScroll()));
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      updateHeroAnimation(window.scrollY);
+    }, { passive: true });
+
+    updateHeroAnimation(window.scrollY);
+
+  } else {
+    const target = initialAnchor();
+    const initialY = target ? Math.min(anchorPosition(target), maxScroll()) : 0;
+    window.scrollTo(0, initialY);
+    targetScrollY = initialY;
+    smoothScrollY = initialY;
+
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      targetScrollY += e.deltaY * 1.2;
+      targetScrollY = Math.max(0, Math.min(targetScrollY, maxScroll()));
+    }, { passive: false });
+
+    function tick() {
+      requestAnimationFrame(tick);
+
+      targetScrollY = Math.max(0, Math.min(targetScrollY, maxScroll()));
+      smoothScrollY += (targetScrollY - smoothScrollY) * EASE;
+
+      if (Math.abs(targetScrollY - smoothScrollY) < 0.5) {
+        smoothScrollY = targetScrollY;
+      }
+
+      if (Math.abs(smoothScrollY - window.scrollY) > 0.5) {
+        window.scrollTo(0, smoothScrollY);
+      }
+
+      updateHeroAnimation(smoothScrollY);
+    }
+
+    tick();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Блог Domora — поради про нерухомість</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #15150f;
+    --bg-soft: #1b1b13;
+    --surface-glass: rgba(255,255,255,0.06);
+    --surface-glass-strong: rgba(255,255,255,0.10);
+    --border-glass: rgba(255,255,255,0.14);
+    --text-primary: #f4f2ea;
+    --text-secondary: #b7b3a5;
+    --accent: #d9a15b;
+    --accent-soft: rgba(217,161,91,0.16);
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 28px;
+    --font-head: 'Space Grotesk', sans-serif;
+    --font-body: 'Manrope', sans-serif;
+    --container: 1240px;
+    --gap: clamp(16px, 3vw, 32px);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--text-primary);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ display:block; width:100%; height:100%; object-fit:cover; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  .wrap{ max-width:var(--container); margin-inline:auto; padding-inline:clamp(20px,5vw,48px); }
+
+  .glass{
+    background:var(--surface-glass);
+    border:1px solid var(--border-glass);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-radius:var(--radius-md);
+  }
+
+  /* ---------- HEADER (higher-contrast, readable over any hero image) ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:18px clamp(20px,5vw,48px);
+  }
+  .nav-inner{
+    max-width:var(--container); margin-inline:auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 22px;
+    background:rgba(15,15,10,0.62);
+    border:1px solid rgba(255,255,255,0.18);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    border-radius:var(--radius-md);
+  }
+  .logo{ font-family:var(--font-head); font-weight:600; font-size:1.2rem; display:flex; align-items:center; gap:8px; color:#fff; }
+  .logo span{ color:var(--accent); }
+  nav ul{ display:flex; gap:32px; }
+  nav a{ font-size:0.95rem; font-weight:600; color:rgba(244,242,234,0.92); transition:color .2s; }
+  nav a:hover{ color:var(--accent); }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 22px; border-radius:999px;
+    font-size:0.9rem; font-weight:600;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .btn-primary{ background:var(--accent); color:#1a1408; }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-ghost{ border:1px solid rgba(255,255,255,0.28); color:#fff; }
+  .btn-ghost:hover{ background:var(--surface-glass-strong); }
+
+  .burger{ display:none; width:40px; height:40px; align-items:center; justify-content:center; border-radius:50%; color:#fff; background:rgba(15,15,10,0.55); border:1px solid rgba(255,255,255,0.2); }
+  .burger svg{ width:20px; height:20px; }
+
+  .mobile-menu{
+    display:none;
+    position:fixed; inset:0; z-index:60;
+    background:rgba(10,10,7,0.92);
+    backdrop-filter:blur(20px);
+    flex-direction:column; align-items:center; justify-content:center; gap:28px;
+  }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ font-family:var(--font-head); font-size:1.6rem; color:#fff; }
+  .mobile-menu .close{ position:absolute; top:24px; right:24px; width:44px; height:44px; color:#fff; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; align-items:flex-end;
+    padding-bottom:clamp(40px,6vw,80px);
+    overflow:hidden;
+  }
+  .hero-bg{ position:absolute; inset:0; z-index:0; }
+  .hero-bg img, .hero-bg video{ width:100%; height:100%; object-fit:cover; }
+  .hero-bg::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(21,21,15,0.15) 0%, rgba(21,21,15,0.35) 45%, rgba(21,21,15,0.95) 100%);
+  }
+  .hero-content{
+    position:relative; z-index:2; width:100%;
+    display:flex; align-items:flex-end; justify-content:space-between; gap:40px;
+  }
+  .hero-text{ max-width:640px; animation:riseIn 0.9s ease both; }
+  .eyebrow{ color:var(--accent); font-weight:600; letter-spacing:0.02em; margin-bottom:14px; font-size:0.95rem; }
+  .hero-text h1{
+    font-family:var(--font-head);
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:1.02;
+    font-weight:600;
+    margin-bottom:20px;
+  }
+  .hero-text p{ color:var(--text-secondary); font-size:clamp(1rem,1.6vw,1.15rem); max-width:480px; margin-bottom:28px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  /* ---------- HERO SLIDER CARD ---------- */
+  .hero-card{
+    width:300px; flex-shrink:0; padding:18px;
+    animation:riseIn 1.1s ease both;
+  }
+  .hero-card .thumb{ position:relative; border-radius:var(--radius-sm); overflow:hidden; aspect-ratio:4/3; margin-bottom:14px; }
+  .hero-card .thumb img{ transition:opacity .3s ease; }
+  .slide-arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:34px; height:34px; border-radius:50%;
+    background:rgba(15,15,10,0.55); border:1px solid rgba(255,255,255,0.3);
+    backdrop-filter:blur(10px); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .2s ease;
+  }
+  .slide-arrow:hover{ background:var(--accent); color:#1a1408; }
+  .slide-arrow.prev{ left:8px; }
+  .slide-arrow.next{ right:8px; }
+  .slide-arrow svg{ width:16px; height:16px; }
+  .slide-dots{ display:flex; gap:6px; position:absolute; bottom:8px; left:50%; transform:translateX(-50%); }
+  .slide-dots span{ width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.4); transition:background .2s; }
+  .slide-dots span.active{ background:var(--accent); }
+  .hero-card h3{ font-family:var(--font-head); font-size:1.05rem; margin-bottom:4px; }
+  .hero-card .loc{ color:var(--text-secondary); font-size:0.85rem; margin-bottom:14px; }
+  .hero-card .price{ font-weight:700; color:var(--accent); }
+
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(24px);} to{ opacity:1; transform:translateY(0);} }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; scroll-behavior:auto !important; } }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ padding:clamp(70px,10vw,120px) 0; }
+  .section-head{ max-width:640px; margin-bottom:48px; }
+  .section-head .eyebrow{ margin-bottom:12px; }
+  .section-head h2{ font-family:var(--font-head); font-size:clamp(1.8rem,3.4vw,2.6rem); font-weight:600; line-height:1.15; }
+  .section-head p{ color:var(--text-secondary); margin-top:14px; }
+
+  /* ---------- STATEMENT BAND ---------- */
+  .statement{ background:var(--bg-soft); }
+  .statement .wrap{ text-align:center; }
+  .statement p{
+    font-family:var(--font-head); font-weight:500;
+    font-size:clamp(1.6rem, 4vw, 2.6rem);
+    line-height:1.25; max-width:900px; margin-inline:auto;
+  }
+  .statement p em{ color:var(--accent); font-style:normal; }
+
+  /* ---------- CATEGORIES ---------- */
+  .cat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:var(--gap); }
+  .cat-card{ padding:28px; transition:transform .25s ease, background .25s ease; }
+  .cat-card:hover{ transform:translateY(-6px); background:var(--surface-glass-strong); }
+  .cat-card .num{ color:var(--text-secondary); font-size:0.85rem; margin-bottom:26px; display:block; }
+  .cat-card h3{ font-family:var(--font-head); font-size:1.15rem; margin-bottom:8px; }
+  .cat-card p{ color:var(--text-secondary); font-size:0.9rem; }
+
+  /* ---------- LISTINGS (higher-contrast overlay + brighter hover) ---------- */
+  .listing-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); }
+  .listing-card{ border-radius:var(--radius-md); overflow:hidden; position:relative; }
+  .listing-card .img-wrap{ aspect-ratio:4/5; overflow:hidden; }
+  .listing-card .img-wrap img{ transition:transform .5s ease; }
+  .listing-card:hover .img-wrap img{ transform:scale(1.06); }
+  .listing-info{
+    position:absolute; left:14px; right:14px; bottom:14px;
+    padding:16px 18px;
+    background:rgba(12,11,8,0.66);
+    border:1px solid rgba(255,255,255,0.16);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border-radius:var(--radius-sm);
+    transition:background .25s ease, border-color .25s ease;
+  }
+  .listing-card:hover .listing-info{
+    background:rgba(217,161,91,0.26);
+    border-color:rgba(217,161,91,0.6);
+  }
+  .listing-info .top-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .listing-info h3{ font-family:var(--font-head); font-size:1.05rem; color:#fff; }
+  .listing-info .price{ color:var(--accent); font-weight:700; font-size:0.95rem; }
+  .listing-card:hover .listing-info .price{ color:#fff2e0; }
+  .listing-info .meta{ color:#ded9cb; font-size:0.84rem; font-weight:500; }
+  .listing-card:hover .listing-info .meta{ color:#fff; }
+
+  /* ---------- TESTIMONIALS (grid of several) ---------- */
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); }
+  .testi-card{ padding:28px; display:flex; flex-direction:column; justify-content:space-between; min-height:220px; }
+  .testi-card blockquote{ font-size:0.98rem; line-height:1.55; margin-bottom:20px; }
+  .testi-card .who{ display:flex; align-items:center; gap:12px; }
+  .testi-card .who .ph{ width:42px; height:42px; border-radius:50%; overflow:hidden; flex-shrink:0; }
+  .testi-card .name{ font-weight:700; font-size:0.88rem; }
+  .testi-card .sub{ color:var(--text-secondary); font-size:0.78rem; }
+
+  /* ---------- ABOUT STATS ---------- */
+  .stats-panel{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:clamp(28px,4vw,48px);
+  }
+  .stat-item{ flex:1; text-align:center; padding:0 12px; position:relative; }
+  .stat-item + .stat-item::before{
+    content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
+    width:1px; height:56px; background:var(--border-glass);
+  }
+  .stat-item .num{ font-family:var(--font-head); font-size:clamp(2.1rem,4.5vw,3.2rem); font-weight:700; color:var(--accent); line-height:1; }
+  .stat-item .label{ color:var(--text-secondary); font-size:0.88rem; margin-top:10px; }
+
+  /* ---------- BLOG ---------- */
+  .blog-more{ display:flex; justify-content:center; margin-top:40px; }
+  .blog-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); }
+  .blog-card{ overflow:hidden; }
+  .blog-card .img-wrap{ aspect-ratio:16/10; overflow:hidden; }
+  .blog-card .body{ padding:22px; }
+  .blog-card .tag{ color:var(--accent); font-size:0.78rem; font-weight:600; margin-bottom:10px; display:block; }
+  .blog-card h3{ font-family:var(--font-head); font-size:1.05rem; margin-bottom:8px; line-height:1.3; }
+  .blog-card p{ color:var(--text-secondary); font-size:0.88rem; }
+
+  /* ---------- CTA ТА ФУТЕР ---------- */
+  .site-end{
+    --end-accent:#d5a468;
+    --end-muted:#a8aaa3;
+    color:#fff;
+    font-family:'Inter',var(--font-body);
+    background:linear-gradient(to bottom,rgba(20,21,17,0.78),rgba(20,21,17,0.96)),url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  }
+  .site-end .contact-section{ padding:clamp(40px,5vw,60px) 0 0; }
+  .end-cta{
+    display:flex; align-items:center; justify-content:space-between; gap:32px;
+    padding:clamp(32px,5vw,60px);
+    background:rgba(32,34,28,0.85);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.4);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+  .end-cta-copy{ max-width:600px; }
+  .end-cta h2{ font-family:inherit; font-size:clamp(1.7rem,3.2vw,2.5rem); font-weight:700; line-height:1.2; }
+  .end-cta p{ margin-top:15px; color:var(--end-muted); font-size:1.05rem; }
+  .end-cta-link{
+    display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+    padding:18px 32px; border-radius:50px;
+    background:var(--end-accent); color:#111;
+    font-size:1rem; font-weight:600; white-space:nowrap;
+    transition:background .3s ease,transform .3s ease,box-shadow .3s ease;
+  }
+  .end-cta-link:hover{ background:#e6b67b; transform:translateY(-3px); box-shadow:0 5px 20px rgba(213,164,104,0.3); }
+  .site-footer{ margin-top:80px; padding:60px 0 0; border-top:1px solid rgba(255,255,255,0.08); }
+  .end-footer-grid{ display:grid; grid-template-columns:2fr repeat(3,1fr); gap:40px; margin-bottom:32px; }
+  .end-brand-logo{ display:inline-flex; align-items:center; font-size:1.5rem; font-weight:700; line-height:1; letter-spacing:.5px; }
+  .end-brand-logo .diamond{ margin-right:8px; font-size:.9rem; }
+  .end-brand-logo .ora{ margin-left:5px; color:var(--end-accent); }
+  .end-brand-desc{ max-width:250px; margin-top:20px; color:var(--end-muted); font-size:.94rem; line-height:1.6; }
+  .end-footer-col h4{ margin-bottom:25px; color:var(--end-muted); font-size:.875rem; font-weight:500; }
+  .end-footer-col li{ margin-bottom:15px; }
+  .end-footer-col a,.end-footer-col .plain-text{ color:#fff; font-size:.94rem; transition:color .3s ease; }
+  .end-footer-col a:hover{ color:var(--end-accent); }
+  .end-giant-logo{
+    display:flex; align-items:center; justify-content:center; width:100%;
+    padding:14px 0 20px; overflow:hidden;
+    color:rgba(255,255,255,0.9);
+    font-size:14vw; font-weight:800; line-height:1; letter-spacing:-.02em;
+    white-space:nowrap; user-select:none;
+  }
+  .end-giant-logo .diamond{ margin-right:1.5vw; font-size:9vw; }
+  .end-giant-logo .ora{ margin-left:2vw; color:var(--end-accent); }
+  .end-copyright{ padding-bottom:20px; color:rgba(168,170,163,0.7); font-size:.8rem; text-align:center; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1000px){
+    nav, .btn-ghost.desktop-only{ display:none; }
+    .burger{ display:flex; }
+    .cat-grid{ grid-template-columns:repeat(2,1fr); }
+    .listing-grid{ grid-template-columns:repeat(2,1fr); }
+    .testi-grid{ grid-template-columns:repeat(2,1fr); }
+    .hero-content{ flex-direction:column; align-items:flex-start; }
+    .hero-card{ width:100%; max-width:340px; }
+  }
+  @media (max-width:900px){
+    .end-cta{ flex-direction:column; align-items:stretch; text-align:center; }
+    .end-cta-link{ width:100%; }
+    .end-footer-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:600px){
+    .cat-grid, .listing-grid, .testi-grid, .blog-grid{ grid-template-columns:1fr; }
+    .end-footer-grid{ grid-template-columns:1fr; gap:28px; text-align:center; }
+    .end-brand-desc{ margin-inline:auto; }
+    .site-footer{ margin-top:60px; }
+    .end-giant-logo{ font-size:14vw; }
+    .end-giant-logo .diamond{ font-size:9vw; }
+    .stats-panel{ flex-direction:column; gap:24px; }
+    .stat-item + .stat-item::before{ display:none; }
+  }
+</style>
+<style>
+  .page-hero{ padding:clamp(140px,18vw,180px) 0 20px; }
+  .page-hero .eyebrow{ margin-bottom:14px; }
+  .page-hero h1{ font-family:var(--font-head); font-size:clamp(2rem,4.5vw,3.2rem); font-weight:600; max-width:700px; }
+  .page-hero p{ color:var(--text-secondary); margin-top:16px; max-width:560px; }
+  .back-link{ display:inline-flex; align-items:center; gap:8px; color:var(--text-secondary); font-size:0.9rem; margin-bottom:24px; }
+  .back-link:hover{ color:var(--accent); }
+  .full-blog-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); }
+  @media (max-width:1000px){ .full-blog-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:600px){ .full-blog-grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="domora.html#hero" class="logo">◆ Dom<span>ora</span></a>
+    <nav>
+      <ul>
+        <li><a href="domora.html#hero">Головна</a></li>
+        <li><a href="domora.html#listings">Об'єкти</a></li>
+        <li><a href="domora.html#testimonials">Відгуки</a></li>
+        <li><a href="blog.html">Блог</a></li>
+        <li><a href="#contact">Контакти</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="btn btn-primary desktop-only">Забронювати перегляд</a>
+    <button class="burger" aria-label="Відкрити меню" onclick="document.getElementById('mmenu').classList.add('open')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mmenu">
+  <button class="close" aria-label="Закрити меню" onclick="document.getElementById('mmenu').classList.remove('open')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;margin:auto;"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+  </button>
+  <a href="domora.html#hero" onclick="document.getElementById('mmenu').classList.remove('open')">Головна</a>
+  <a href="domora.html#listings" onclick="document.getElementById('mmenu').classList.remove('open')">Об'єкти</a>
+  <a href="domora.html#testimonials" onclick="document.getElementById('mmenu').classList.remove('open')">Відгуки</a>
+  <a href="blog.html" onclick="document.getElementById('mmenu').classList.remove('open')">Блог</a>
+  <a href="#contact" class="btn btn-primary" onclick="document.getElementById('mmenu').classList.remove('open')">Забронювати перегляд</a>
+</div>
+
+<section class="page-hero">
+  <div class="wrap">
+    <a href="domora.html" class="back-link">← На головну</a>
+    <div class="eyebrow">Блог Domora</div>
+    <h1>Перш ніж підписати договір</h1>
+    <p>Все, що варто знати перед покупкою, орендою чи утриманням нерухомості — без води, по суті.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="full-blog-grid">
+      <div class="blog-card glass">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1763729805496-b5dbf7f00c79?auto=format&fit=crop&w=700&q=80" alt="Підписання документів на нерухомість"></div>
+        <div class="body">
+          <span class="tag">Юридичні поради</span>
+          <h3>5 документів, які варто перевірити перед покупкою</h3>
+          <p>Що просити у власника і на що звертати увагу нотаріусу.</p>
+        </div>
+      </div>
+      <div class="blog-card glass">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1728825445493-1a6e89164511?auto=format&fit=crop&w=700&q=80" alt="Калькулятор та макет будинку для розрахунку іпотеки"></div>
+        <div class="body">
+          <span class="tag">Фінанси</span>
+          <h3>Як порахувати реальну вартість іпотеки</h3>
+          <p>Приховані платежі, які часто не враховують у розрахунках.</p>
+        </div>
+      </div>
+      <div class="blog-card glass">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1637119106192-036fbe26d38d?auto=format&fit=crop&w=700&q=80" alt="Вигляд на житловий район з висоти"></div>
+        <div class="body">
+          <span class="tag">Огляди районів</span>
+          <h3>Де в Ужгороді варто шукати квартиру в 2026</h3>
+          <p>Інфраструктура, ціни та плани забудови по районах.</p>
+        </div>
+      </div>
+      <div class="blog-card glass">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1733244766159-f58f4184fd38?auto=format&fit=crop&w=700&q=80" alt="Ключ у дверях під час першого перегляду об'єкта"></div>
+        <div class="body">
+          <span class="tag">Перед покупкою</span>
+          <h3>Що перевірити під час першого перегляду об'єкта</h3>
+          <p>Короткий чек-лист, який рятує від дорогих сюрпризів згодом.</p>
+        </div>
+      </div>
+      <div class="blog-card glass">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1747037941864-74595e4ff56d?auto=format&fit=crop&w=700&q=80" alt="Ключі, гроші та мініатюрні будинки"></div>
+        <div class="body">
+          <span class="tag">Аналітика</span>
+          <h3>Оренда чи покупка: як порахувати, що вигідніше саме вам</h3>
+          <p>Проста формула для оцінки терміну окупності власного житла.</p>
+        </div>
+      </div>
+      <div class="blog-card glass">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1604177420682-0c840feb01de?auto=format&fit=crop&w=700&q=80" alt="Електролічильник у будинку"></div>
+        <div class="body">
+          <span class="tag">Утримання</span>
+          <h3>Комунальні платежі та приховані витрати на утримання будинку</h3>
+          <p>Про що власники рідко розповідають на перегляді.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="site-end">
+  <section id="contact" class="contact-section">
+    <div class="wrap">
+      <div class="end-cta">
+        <div class="end-cta-copy">
+          <h2>Не знайшли свій варіант серед оголошень?</h2>
+          <p>Опишіть, що шукаєте — підберемо варіанти, яких ще немає в загальному каталозі.</p>
+        </div>
+        <a href="mailto:hello@domora.ua" class="end-cta-link">Розказати, що я шукаю</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="end-footer-grid">
+        <div class="end-footer-col">
+          <a href="domora.html#hero" class="end-brand-logo"><span class="diamond">◆</span><span>Dom</span><span class="ora">ora</span></a>
+          <p class="end-brand-desc">Агенція нерухомості в Закарпатті.<br>Підбираємо, перевіряємо, супроводжуємо угоду до кінця.</p>
+        </div>
+        <div class="end-footer-col">
+          <h4>Розділи</h4>
+          <ul>
+            <li><a href="domora.html#listings">Об'єкти</a></li>
+            <li><a href="domora.html#testimonials">Відгуки</a></li>
+            <li><a href="blog.html">Блог</a></li>
+          </ul>
+        </div>
+        <div class="end-footer-col">
+          <h4>Контакти</h4>
+          <ul>
+            <li><a href="tel:+380000000000">+380 (00) 000-00-00</a></li>
+            <li><a href="mailto:hello@domora.ua">hello@domora.ua</a></li>
+            <li><span class="plain-text">м. Ужгород, вул. Корзо, 1</span></li>
+          </ul>
+        </div>
+        <div class="end-footer-col">
+          <h4>Соцмережі</h4>
+          <ul>
+            <li><span class="plain-text">Instagram</span></li>
+            <li><span class="plain-text">Facebook</span></li>
+            <li><span class="plain-text">Telegram</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="end-giant-logo" aria-hidden="true"><span class="diamond">◆</span><span>DOM<span class="ora">ORA</span></span></div>
+    <div class="end-copyright">© 2026 Domora. Усі права захищено.</div>
+  </footer>
+</div>
+
+</body>
+</html>
