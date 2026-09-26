@@ -3,10 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<!-- TODO: замінити на окрему PNG-іконку 180×180 для iOS, коли вона буде готова. -->
+<link rel="apple-touch-icon" href="favicon.svg">
 <title>Блог Domora — поради про нерухомість</title>
+<meta name="description" content="Блог Domora про нерухомість у Закарпатті: документи перед покупкою, іпотека, вибір району, огляд житла та приховані витрати.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Блог Domora — поради про нерухомість">
+<meta property="og:description" content="Блог Domora про нерухомість у Закарпатті: документи перед покупкою, іпотека, вибір району, огляд житла та приховані витрати.">
+<link rel="canonical" href="https://domora.ua/blog.html">
+<meta property="og:url" content="https://domora.ua/blog.html">
+<!-- TODO: додати абсолютну HTTPS-адресу зображення 1200×630 після створення файлу. -->
+<meta property="og:image" content="">
+<meta name="twitter:card" content="summary_large_image">
+<!-- GA4: вставити тег тут після налаштування аналітики. -->
+<!-- Meta Pixel: вставити тут після налаштування аналітики. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&amp;family=Nata+Sans:wght@400;500;600;700&amp;family=Scada:wght@400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="inquiry.css">
 <style>
   :root{
     --bg: #15150f;
@@ -21,8 +36,9 @@
     --radius-sm: 10px;
     --radius-md: 18px;
     --radius-lg: 28px;
-    --font-head: 'Space Grotesk', sans-serif;
-    --font-body: 'Manrope', sans-serif;
+    --font-head: 'Scada', sans-serif;
+    --font-brand: 'Montserrat Alternates', sans-serif;
+    --font-body: 'Nata Sans', sans-serif;
     --container: 1240px;
     --gap: clamp(16px, 3vw, 32px);
   }
@@ -33,10 +49,12 @@
     background:var(--bg);
     color:var(--text-primary);
     font-family:var(--font-body);
+    font-weight:400;
     line-height:1.5;
     -webkit-font-smoothing:antialiased;
   }
   img{ display:block; width:100%; height:100%; object-fit:cover; }
+  h1,h2,h3,h4{ font-weight:400; }
   a{ color:inherit; text-decoration:none; }
   ul{ list-style:none; }
   button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
@@ -44,6 +62,7 @@
   :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
 
   .wrap{ max-width:var(--container); margin-inline:auto; padding-inline:clamp(20px,5vw,48px); }
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
   .glass{
     background:var(--surface-glass);
@@ -69,21 +88,25 @@
     -webkit-backdrop-filter:blur(22px);
     border-radius:var(--radius-md);
   }
-  .logo{ font-family:var(--font-head); font-weight:600; font-size:1.2rem; display:flex; align-items:center; gap:8px; flex-shrink:0; white-space:nowrap; color:#fff; }
+  .logo{ font-family:var(--font-brand); font-weight:700; font-size:1.2rem; display:flex; align-items:center; gap:8px; flex-shrink:0; white-space:nowrap; color:#fff; }
   .logo span{ color:var(--accent); }
-  nav ul{ display:flex; gap:32px; }
-  nav a{ font-size:0.95rem; font-weight:600; color:rgba(244,242,234,0.92); transition:color .2s; }
-  nav a:hover{ color:var(--accent); }
-  .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    padding:12px 22px; border-radius:999px;
-    font-size:0.9rem; font-weight:600;
-    transition:transform .2s ease, background .2s ease;
-  }
-  .btn-primary{ background:var(--accent); color:#1a1408; }
-  .btn-primary:hover{ transform:translateY(-2px); }
-  .btn-ghost{ border:1px solid rgba(255,255,255,0.28); color:#fff; }
-  .btn-ghost:hover{ background:var(--surface-glass-strong); }
+  header nav ul{ display:flex; align-items:center; gap:32px; }
+  header nav a,header nav summary{ font-size:0.95rem; font-weight:600; color:rgba(244,242,234,0.92); transition:color .2s; }
+  header nav a:hover,header nav summary:hover,header nav details[open] summary{ color:var(--accent); }
+  header nav details{ position:relative; }
+  header nav summary{ display:flex; align-items:center; gap:6px; cursor:pointer; list-style:none; white-space:nowrap; }
+  header nav summary::-webkit-details-marker{ display:none; }
+  header nav summary::after{ content:'⌄'; font-size:1rem; line-height:1; transition:transform .2s; }
+  header nav details[open] summary::after{ transform:rotate(180deg); }
+  .nav-submenu{ position:absolute; top:calc(100% + 16px); left:-14px; z-index:2; display:grid; gap:2px; min-width:190px; padding:9px; background:rgba(20,20,15,.97); border:1px solid var(--border-glass); border-radius:var(--radius-sm); box-shadow:0 16px 34px rgba(0,0,0,.35); }
+  .nav-submenu a{ display:block; padding:9px 11px; border-radius:7px; white-space:nowrap; font-size:.86rem; }
+  .nav-submenu a:hover{ background:var(--surface-glass-strong); }
+  .btn,.end-cta-link{ display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:12px 22px; border:1px solid transparent; border-radius:999px; font-family:var(--font-body); font-size:.95rem; font-weight:600; line-height:1.2; letter-spacing:.01em; text-align:center; box-shadow:0 8px 24px rgba(0,0,0,.12); transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease; }
+  .btn-primary,.end-cta-link{ background:var(--accent); border-color:rgba(255,255,255,.18); color:#1a1408; }
+  .btn-primary:hover,.end-cta-link:hover{ background:#e6b67b; transform:translateY(-2px); box-shadow:0 10px 24px rgba(217,161,91,.24); }
+  .btn-ghost{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.28); color:#fff; }
+  .btn-ghost:hover{ background:var(--surface-glass-strong); transform:translateY(-2px); }
+  .burger:hover,.mobile-menu .close:hover{ color:var(--accent); background:var(--accent-soft); }
 
   .burger{ display:none; width:40px; height:40px; flex:0 0 40px; align-items:center; justify-content:center; border-radius:50%; color:#fff; background:rgba(15,15,10,0.55); border:1px solid rgba(255,255,255,0.2); }
   .burger svg{ width:20px; height:20px; }
@@ -91,14 +114,14 @@
   .mobile-menu{
     display:none;
     position:fixed; inset:0; z-index:60;
-    padding:72px 20px 32px;
+    padding:72px 20px 28px;
     overflow-y:auto;
     background:rgba(10,10,7,0.92);
     backdrop-filter:blur(20px);
-    flex-direction:column; align-items:center; justify-content:center; gap:28px;
+    flex-direction:column; align-items:center; justify-content:flex-start; gap:18px;
   }
   .mobile-menu.open{ display:flex; }
-  .mobile-menu a{ font-family:var(--font-head); font-size:1.6rem; color:#fff; text-align:center; }
+  .mobile-menu a{ font-family:var(--font-brand); font-size:1.3rem; color:#fff; text-align:center; }
   .mobile-menu .btn{ width:min(100%, 340px); justify-content:center; padding:14px 18px; font-family:var(--font-body); font-size:0.95rem; white-space:normal; }
   .mobile-menu .btn-primary{ color:#1a1408; }
   .mobile-menu .close{ position:absolute; top:24px; right:24px; width:44px; height:44px; color:#fff; }
@@ -127,7 +150,7 @@
     font-family:var(--font-head);
     font-size:clamp(2.6rem, 6vw, 4.6rem);
     line-height:1.02;
-    font-weight:600;
+    font-weight:400;
     margin-bottom:20px;
   }
   .hero-text p{ color:var(--text-secondary); font-size:clamp(1rem,1.6vw,1.15rem); max-width:480px; margin-bottom:28px; }
@@ -155,26 +178,26 @@
   .slide-dots{ display:flex; gap:6px; position:absolute; bottom:8px; left:50%; transform:translateX(-50%); }
   .slide-dots span{ width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.4); transition:background .2s; }
   .slide-dots span.active{ background:var(--accent); }
-  .hero-card h3{ font-family:var(--font-head); font-size:1.05rem; margin-bottom:4px; }
+  .hero-card h3{ font-family:var(--font-body); font-size:1.05rem; margin-bottom:4px; }
   .hero-card .loc{ color:var(--text-secondary); font-size:0.85rem; margin-bottom:14px; }
   .hero-card .price{ font-weight:700; color:var(--accent); }
 
   @keyframes riseIn{ from{ opacity:0; transform:translateY(24px);} to{ opacity:1; transform:translateY(0);} }
-  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; scroll-behavior:auto !important; } }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; scroll-behavior:auto !important; } .end-background-video{ display:none; } }
 
   /* ---------- SECTION SHARED ---------- */
   section{ padding:clamp(70px,10vw,120px) 0; }
   .section-head{ max-width:640px; margin-bottom:48px; }
   .section-head .eyebrow{ margin-bottom:12px; }
-  .section-head h2{ font-family:var(--font-head); font-size:clamp(1.8rem,3.4vw,2.6rem); font-weight:600; line-height:1.15; }
+  .section-head h2{ font-family:var(--font-head); font-size:clamp(1.75rem,3vw,2.45rem); font-weight:400; line-height:1.18; }
   .section-head p{ color:var(--text-secondary); margin-top:14px; }
 
   /* ---------- STATEMENT BAND ---------- */
   .statement{ background:var(--bg-soft); }
   .statement .wrap{ text-align:center; }
   .statement p{
-    font-family:var(--font-head); font-weight:500;
-    font-size:clamp(1.6rem, 4vw, 2.6rem);
+    font-family:var(--font-body); font-weight:400;
+    font-size:clamp(1.5rem, 3.4vw, 2.2rem);
     line-height:1.25; max-width:900px; margin-inline:auto;
   }
   .statement p em{ color:var(--accent); font-style:normal; }
@@ -184,7 +207,7 @@
   .cat-card{ padding:28px; transition:transform .25s ease, background .25s ease; }
   .cat-card:hover{ transform:translateY(-6px); background:var(--surface-glass-strong); }
   .cat-card .num{ color:var(--text-secondary); font-size:0.85rem; margin-bottom:26px; display:block; }
-  .cat-card h3{ font-family:var(--font-head); font-size:1.15rem; margin-bottom:8px; }
+  .cat-card h3{ font-family:var(--font-body); font-size:1.15rem; margin-bottom:8px; }
   .cat-card p{ color:var(--text-secondary); font-size:0.9rem; }
 
   /* ---------- LISTINGS (higher-contrast overlay + brighter hover) ---------- */
@@ -208,7 +231,7 @@
     border-color:rgba(217,161,91,0.6);
   }
   .listing-info .top-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
-  .listing-info h3{ font-family:var(--font-head); font-size:1.05rem; color:#fff; }
+  .listing-info h3{ font-family:var(--font-body); font-size:1.05rem; color:#fff; }
   .listing-info .price{ color:var(--accent); font-weight:700; font-size:0.95rem; }
   .listing-card:hover .listing-info .price{ color:#fff2e0; }
   .listing-info .meta{ color:#ded9cb; font-size:0.84rem; font-weight:500; }
@@ -233,7 +256,7 @@
     content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
     width:1px; height:56px; background:var(--border-glass);
   }
-  .stat-item .num{ font-family:var(--font-head); font-size:clamp(2.1rem,4.5vw,3.2rem); font-weight:700; color:var(--accent); line-height:1; }
+  .stat-item .num{ font-family:var(--font-brand); font-size:clamp(2.1rem,4.5vw,3.2rem); font-weight:700; color:var(--accent); line-height:1; }
   .stat-item .label{ color:var(--text-secondary); font-size:0.88rem; margin-top:10px; }
 
   /* ---------- BLOG ---------- */
@@ -243,59 +266,92 @@
   .blog-card .img-wrap{ aspect-ratio:16/10; overflow:hidden; }
   .blog-card .body{ padding:22px; }
   .blog-card .tag{ color:var(--accent); font-size:0.78rem; font-weight:600; margin-bottom:10px; display:block; }
-  .blog-card h3{ font-family:var(--font-head); font-size:1.05rem; margin-bottom:8px; line-height:1.3; }
+  .blog-card h3{ font-family:var(--font-body); font-size:1.05rem; margin-bottom:8px; line-height:1.3; }
   .blog-card p{ color:var(--text-secondary); font-size:0.88rem; }
 
   /* ---------- CTA ТА ФУТЕР ---------- */
   .site-end{
     --end-accent:#d5a468;
     --end-muted:#a8aaa3;
+    position:relative;
+    overflow:hidden;
     color:#fff;
-    font-family:'Inter',var(--font-body);
-    background:linear-gradient(to bottom,rgba(20,21,17,0.78),rgba(20,21,17,0.96)),url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    font-family:var(--font-body);
+    background:#0b0b0b;
   }
   .site-end .contact-section{ padding:clamp(40px,5vw,60px) 0 0; }
   .end-cta{
-    display:flex; align-items:center; justify-content:space-between; gap:32px;
+    position:relative; isolation:isolate; display:flex; align-items:center; min-height:clamp(420px,47vw,580px);
     padding:clamp(32px,5vw,60px);
-    background:rgba(32,34,28,0.85);
-    border:1px solid rgba(255,255,255,0.08);
+    overflow:hidden;
+    background:#1c1d18;
+    border:1px solid rgba(255,255,255,0.22);
     border-radius:24px;
     box-shadow:0 15px 35px rgba(0,0,0,0.4);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
   }
+  .end-cta::after{ content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg,rgba(8,10,7,.86) 0%,rgba(8,10,7,.66) 46%,rgba(8,10,7,.18) 100%); }
+  .end-cta-content{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:flex-start; gap:28px; min-width:0; width:min(100%,600px); }
   .end-cta-copy{ max-width:600px; }
-  .end-cta h2{ font-family:inherit; font-size:clamp(1.7rem,3.2vw,2.5rem); font-weight:700; line-height:1.2; }
+  .end-cta h2{ font-family:var(--font-head); font-size:clamp(1.55rem,2.9vw,2.3rem); font-weight:400; line-height:1.2; }
   .end-cta p{ margin-top:15px; color:var(--end-muted); font-size:1.05rem; }
   .end-cta-link{
-    display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
-    padding:18px 32px; border-radius:50px;
-    background:var(--end-accent); color:#111;
-    font-size:1rem; font-weight:600; white-space:nowrap;
-    transition:background .3s ease,transform .3s ease,box-shadow .3s ease;
+    padding-inline:28px; white-space:nowrap;
   }
-  .end-cta-link:hover{ background:#e6b67b; transform:translateY(-3px); box-shadow:0 5px 20px rgba(213,164,104,0.3); }
-  .site-footer{ margin-top:80px; padding:60px 0 0; border-top:1px solid rgba(255,255,255,0.08); }
+  .end-cta-media{ position:absolute; inset:0; z-index:0; background:#25251e url('footer-poster.jpg') center/cover no-repeat; }
+  .end-background-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; pointer-events:none; }
+  .site-footer{
+    --end-muted:#e2dfd6;
+    position:relative; isolation:isolate; overflow:hidden;
+    margin-top:40px; padding:40px 0 0;
+    border-top:1px solid rgba(255,255,255,.12);
+    background-color:#0b0b0b;
+    background-image:linear-gradient(180deg,rgba(5,8,6,.58),rgba(5,8,6,.67) 58%,rgba(5,8,6,.78)),url('Editing_nature_background_image_2K_20260926223842.jpg');
+    background-size:cover;
+    background-position:center bottom;
+    background-repeat:no-repeat;
+  }
+  .site-footer::before{
+    content:""; position:absolute; inset:auto 0 0; z-index:1;
+    height:clamp(210px,21vw,310px); pointer-events:none;
+    background:linear-gradient(180deg,rgba(248,249,245,0) 0%,rgba(248,249,245,.12) 27%,rgba(248,249,245,.7) 70%,#f8f9f5 100%);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    -webkit-mask-image:linear-gradient(180deg,transparent,#000 24%);
+    mask-image:linear-gradient(180deg,transparent,#000 24%);
+  }
+  .site-footer > .wrap{ position:relative; z-index:2; }
   .end-footer-grid{ display:grid; grid-template-columns:2fr repeat(3,1fr); gap:40px; margin-bottom:32px; }
-  .end-brand-logo{ display:inline-flex; align-items:center; font-size:1.5rem; font-weight:700; line-height:1; letter-spacing:.5px; }
+  .end-brand-logo{ display:inline-flex; align-items:center; font-family:var(--font-brand); font-size:1.4rem; font-weight:700; line-height:1; letter-spacing:-.03em; }
   .end-brand-logo .diamond{ margin-right:8px; font-size:.9rem; }
   .end-brand-logo .ora{ margin-left:5px; color:var(--end-accent); }
   .end-brand-desc{ max-width:250px; margin-top:20px; color:var(--end-muted); font-size:.94rem; line-height:1.6; }
-  .end-footer-col h4{ margin-bottom:25px; color:var(--end-muted); font-size:.875rem; font-weight:500; }
+  .end-footer-col h3{ margin-bottom:25px; color:var(--end-muted); font-family:var(--font-body); font-size:.875rem; font-weight:400; }
   .end-footer-col li{ margin-bottom:15px; }
   .end-footer-col a,.end-footer-col .plain-text{ color:#fff; font-size:.94rem; transition:color .3s ease; }
   .end-footer-col a:hover{ color:var(--end-accent); }
   .end-giant-logo{
+    position:relative; z-index:2;
     display:flex; align-items:center; justify-content:center; width:100%;
     padding:14px 0 20px; overflow:hidden;
     color:rgba(255,255,255,0.9);
-    font-size:14vw; font-weight:800; line-height:1; letter-spacing:-.02em;
+    font-family:var(--font-brand); font-size:14vw; font-weight:700; line-height:1; letter-spacing:-.02em;
     white-space:nowrap; user-select:none;
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 32%,rgba(0,0,0,.55) 68%,transparent 100%);
+    mask-image:linear-gradient(180deg,#000 0%,#000 32%,rgba(0,0,0,.55) 68%,transparent 100%);
   }
   .end-giant-logo .diamond{ margin-right:1.5vw; font-size:9vw; }
   .end-giant-logo .ora{ margin-left:2vw; color:var(--end-accent); }
   .end-copyright{ padding-bottom:20px; color:rgba(168,170,163,0.7); font-size:.8rem; text-align:center; }
+  .site-footer .end-copyright{ position:relative; z-index:2; color:#3d423b; }
+
+  @media (max-width:768px){
+    .site-footer{
+      background-image:linear-gradient(180deg,rgba(5,8,6,.60),rgba(5,8,6,.68) 58%,rgba(5,8,6,.80)),url('Sunrise_over_misty_green_hill_2K_20260926224355.jpg');
+      /* У файлі є затемнені бокові поля: масштабуємо центральний вертикальний кадр на всю ширину. */
+      background-size:cover, 360% auto;
+      background-position:center, center 20%;
+    }
+    .site-footer::before{ height:clamp(150px,45vw,220px); }
+  }
 
   /* ---------- RESPONSIVE ---------- */
   @media (min-width:768px) and (max-width:1100px){
@@ -303,7 +359,7 @@
     .logo{ font-size:1rem; gap:5px; }
     header nav{ flex:1; min-width:0; }
     header nav ul{ justify-content:center; gap:clamp(8px,1.1vw,15px); }
-    header nav a{ font-size:clamp(0.72rem,1.35vw,0.84rem); white-space:nowrap; }
+    header nav a,header nav summary{ font-size:clamp(0.72rem,1.35vw,0.84rem); white-space:nowrap; }
     header .desktop-only{ flex-shrink:0; padding:10px 12px; font-size:clamp(0.72rem,1.35vw,0.84rem); white-space:nowrap; }
   }
   @media (max-width:767px){
@@ -322,25 +378,39 @@
     .hero-card{ width:100%; max-width:340px; }
   }
   @media (max-width:900px){
-    .end-cta{ flex-direction:column; align-items:stretch; text-align:center; }
+    .end-cta{ min-height:500px; }
+    .end-cta::after{ background:linear-gradient(to bottom,rgba(6,8,5,.82) 0%,rgba(6,8,5,.58) 54%,rgba(6,8,5,.28) 100%); }
+    .end-cta-content{ align-items:stretch; text-align:center; margin-inline:auto; }
     .end-cta-link{ width:100%; }
     .end-footer-grid{ grid-template-columns:repeat(2,1fr); }
   }
   @media (max-width:600px){
+    .end-cta{ min-height:540px; align-items:flex-start; padding:26px 22px; }
+    .end-cta-content{ gap:22px; }
+    .end-background-video{ object-position:54% center; }
     .cat-grid, .listing-grid, .testi-grid, .blog-grid{ grid-template-columns:1fr; }
-    .end-footer-grid{ grid-template-columns:1fr; gap:28px; text-align:center; }
-    .end-brand-desc{ margin-inline:auto; }
-    .site-footer{ margin-top:60px; }
-    .end-giant-logo{ font-size:14vw; }
+    .end-footer-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 16px; margin-bottom:16px; text-align:left; }
+    .end-footer-col:first-child,.end-footer-col:last-child{ grid-column:1 / -1; text-align:center; }
+    .end-footer-col h4{ margin-bottom:12px; }
+    .end-footer-col li{ margin-bottom:9px; }
+    .end-footer-col a,.end-footer-col .plain-text{ font-size:.85rem; overflow-wrap:anywhere; }
+    .end-footer-col:last-child ul{ display:flex; justify-content:center; flex-wrap:wrap; gap:8px 18px; }
+    .end-footer-col:last-child li{ margin:0; }
+    .end-brand-desc{ max-width:340px; margin:10px auto 0; line-height:1.45; }
+    .site-footer{ margin-top:24px; padding-top:24px; }
+    .end-giant-logo{ font-size:15.5vw; }
     .end-giant-logo .diamond{ font-size:9vw; }
     .stats-panel{ flex-direction:column; gap:24px; }
     .stat-item + .stat-item::before{ display:none; }
+  }
+  @media (max-width:600px) and (prefers-reduced-motion:reduce){
+    .end-background-video{ display:none; }
   }
 </style>
 <style>
   .page-hero{ padding:clamp(140px,18vw,180px) 0 20px; }
   .page-hero .eyebrow{ margin-bottom:14px; }
-  .page-hero h1{ font-family:var(--font-head); font-size:clamp(2rem,4.5vw,3.2rem); font-weight:600; max-width:700px; }
+  .page-hero h1{ font-family:var(--font-head); font-size:clamp(2rem,4.5vw,3.2rem); font-weight:400; max-width:700px; }
   .page-hero p{ color:var(--text-secondary); margin-top:16px; max-width:560px; }
   .back-link{ display:inline-flex; align-items:center; gap:8px; color:var(--text-secondary); font-size:0.9rem; margin-bottom:24px; }
   .back-link:hover{ color:var(--accent); }
@@ -354,33 +424,47 @@
 <header>
   <div class="nav-inner">
     <a href="index.html#hero" class="logo">◆ Dom<span>ora</span></a>
-    <nav>
+    <nav aria-label="Основна навігація">
       <ul>
         <li><a href="index.html#hero">Головна</a></li>
-        <li><a href="index.html#listings">Об'єкти</a></li>
+        <li><details><summary>Каталог</summary><div class="nav-submenu">
+          <a href="index.html#categories">Категорії</a>
+          <a href="index.html#listings">Об'єкти</a>
+        </div></details></li>
         <li><a href="index.html#testimonials">Відгуки</a></li>
-        <li><a href="blog.html">Блог</a></li>
+        <li><details><summary>Про нас</summary><div class="nav-submenu">
+          <a href="index.html#about-stats">Dom ora у цифрах</a>
+          <a href="index.html#process">Як це працює</a>
+          <a href="index.html#team">Команда</a>
+        </div></details></li>
+        <li><a href="blog.html" aria-current="page">Блог</a></li>
         <li><a href="#contact">Контакти</a></li>
       </ul>
     </nav>
-    <a href="#contact" class="btn btn-primary desktop-only">Забронювати перегляд</a>
+    <a href="mailto:hello@domora.ua" class="btn btn-primary desktop-only" data-inquiry>Отримати консультацію</a>
     <button class="burger" aria-label="Відкрити меню" onclick="document.getElementById('mmenu').classList.add('open')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
 </header>
 
-<div class="mobile-menu" id="mmenu">
+<nav class="mobile-menu" id="mmenu" aria-label="Мобільна навігація">
   <button class="close" aria-label="Закрити меню" onclick="document.getElementById('mmenu').classList.remove('open')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;margin:auto;"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
   </button>
   <a href="index.html#hero" onclick="document.getElementById('mmenu').classList.remove('open')">Головна</a>
+  <a href="index.html#categories" onclick="document.getElementById('mmenu').classList.remove('open')">Категорії</a>
   <a href="index.html#listings" onclick="document.getElementById('mmenu').classList.remove('open')">Об'єкти</a>
   <a href="index.html#testimonials" onclick="document.getElementById('mmenu').classList.remove('open')">Відгуки</a>
-  <a href="blog.html" onclick="document.getElementById('mmenu').classList.remove('open')">Блог</a>
-  <a href="#contact" class="btn btn-primary" onclick="document.getElementById('mmenu').classList.remove('open')">Забронювати перегляд</a>
-</div>
+  <a href="index.html#about-stats" onclick="document.getElementById('mmenu').classList.remove('open')">Dom ora у цифрах</a>
+  <a href="index.html#process" onclick="document.getElementById('mmenu').classList.remove('open')">Як це працює</a>
+  <a href="index.html#team" onclick="document.getElementById('mmenu').classList.remove('open')">Команда</a>
+  <a href="blog.html" aria-current="page" onclick="document.getElementById('mmenu').classList.remove('open')">Блог</a>
+  <a href="#contact" onclick="document.getElementById('mmenu').classList.remove('open')">Контакти</a>
+  <a href="mailto:hello@domora.ua" class="btn btn-primary" data-inquiry onclick="document.getElementById('mmenu').classList.remove('open')">Отримати консультацію</a>
+</nav>
 
+<main>
 <section class="page-hero">
   <div class="wrap">
     <a href="index.html" class="back-link">← На головну</a>
@@ -392,9 +476,10 @@
 
 <section>
   <div class="wrap">
+    <h2 class="sr-only">Статті блогу</h2>
     <div class="full-blog-grid">
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1763729805496-b5dbf7f00c79?auto=format&fit=crop&w=700&q=80" alt="Підписання документів на нерухомість"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1763729805496-b5dbf7f00c79?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Підписання документів на нерухомість" loading="lazy" decoding="async"></div>
         <div class="body">
           <span class="tag">Юридичні поради</span>
           <h3>5 документів, які варто перевірити перед покупкою</h3>
@@ -402,7 +487,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1728825445493-1a6e89164511?auto=format&fit=crop&w=700&q=80" alt="Калькулятор та макет будинку для розрахунку іпотеки"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1728825445493-1a6e89164511?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Калькулятор та макет будинку для розрахунку іпотеки" loading="lazy" decoding="async"></div>
         <div class="body">
           <span class="tag">Фінанси</span>
           <h3>Як порахувати реальну вартість іпотеки</h3>
@@ -410,7 +495,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1637119106192-036fbe26d38d?auto=format&fit=crop&w=700&q=80" alt="Вигляд на житловий район з висоти"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1637119106192-036fbe26d38d?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Вигляд на житловий район з висоти" loading="lazy" decoding="async"></div>
         <div class="body">
           <span class="tag">Огляди районів</span>
           <h3>Де в Ужгороді варто шукати квартиру в 2026</h3>
@@ -418,7 +503,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1733244766159-f58f4184fd38?auto=format&fit=crop&w=700&q=80" alt="Ключ у дверях під час першого перегляду об'єкта"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1733244766159-f58f4184fd38?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Ключ у дверях під час першого перегляду об'єкта" loading="lazy" decoding="async"></div>
         <div class="body">
           <span class="tag">Перед покупкою</span>
           <h3>Що перевірити під час першого перегляду об'єкта</h3>
@@ -426,7 +511,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1747037941864-74595e4ff56d?auto=format&fit=crop&w=700&q=80" alt="Ключі, гроші та мініатюрні будинки"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1747037941864-74595e4ff56d?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Ключі, гроші та мініатюрні будинки" loading="lazy" decoding="async"></div>
         <div class="body">
           <span class="tag">Аналітика</span>
           <h3>Оренда чи покупка: як порахувати, що вигідніше саме вам</h3>
@@ -434,7 +519,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1604177420682-0c840feb01de?auto=format&fit=crop&w=700&q=80" alt="Електролічильник у будинку"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1604177420682-0c840feb01de?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Електролічильник у будинку" loading="lazy" decoding="async"></div>
         <div class="body">
           <span class="tag">Утримання</span>
           <h3>Комунальні платежі та приховані витрати на утримання будинку</h3>
@@ -445,15 +530,21 @@
   </div>
 </section>
 
+</main>
 <div class="site-end">
   <section id="contact" class="contact-section">
     <div class="wrap">
       <div class="end-cta">
-        <div class="end-cta-copy">
-          <h2>Не знайшли свій варіант серед оголошень?</h2>
-          <p>Опишіть, що шукаєте — підберемо варіанти, яких ще немає в загальному каталозі.</p>
+        <div class="end-cta-content">
+          <div class="end-cta-copy">
+            <h2>Не знайшли свій варіант серед оголошень?</h2>
+            <p>Опишіть, що шукаєте — підберемо варіанти, яких ще немає в загальному каталозі.</p>
+          </div>
+          <a href="mailto:hello@domora.ua" class="end-cta-link" data-inquiry>Отримати консультацію</a>
         </div>
-        <a href="mailto:hello@domora.ua" class="end-cta-link">Розказати, що я шукаю</a>
+        <div class="end-cta-media">
+          <video class="end-background-video" autoplay muted loop playsinline preload="none" poster="footer-poster.jpg" aria-hidden="true" data-src="https://res.cloudinary.com/e0jqfgj9/video/upload/v1790438062/hailuo-03_Subtle_motion_photorealistic._The_family_walks_slowly_towards_the_water._The_tre-0_1.mp4"></video>
+        </div>
       </div>
     </div>
   </section>
@@ -466,15 +557,20 @@
           <p class="end-brand-desc">Агенція нерухомості в Закарпатті.<br>Підбираємо, перевіряємо, супроводжуємо угоду до кінця.</p>
         </div>
         <div class="end-footer-col">
-          <h4>Розділи</h4>
+          <h3>Розділи</h3>
           <ul>
+            <li><a href="index.html#categories">Категорії</a></li>
             <li><a href="index.html#listings">Об'єкти</a></li>
             <li><a href="index.html#testimonials">Відгуки</a></li>
+            <li><a href="index.html#about-stats">Dom ora у цифрах</a></li>
+            <li><a href="index.html#process">Як це працює</a></li>
+            <li><a href="index.html#team">Команда</a></li>
             <li><a href="blog.html">Блог</a></li>
+            <li><a href="#contact">Контакти</a></li>
           </ul>
         </div>
         <div class="end-footer-col">
-          <h4>Контакти</h4>
+          <h3>Контакти</h3>
           <ul>
             <li><a href="tel:+380000000000">+380 (00) 000-00-00</a></li>
             <li><a href="mailto:hello@domora.ua">hello@domora.ua</a></li>
@@ -482,7 +578,7 @@
           </ul>
         </div>
         <div class="end-footer-col">
-          <h4>Соцмережі</h4>
+          <h3>Соцмережі</h3>
           <ul>
             <li><span class="plain-text">Instagram</span></li>
             <li><span class="plain-text">Facebook</span></li>
@@ -495,6 +591,46 @@
     <div class="end-copyright">© 2026 Domora. Усі права захищено.</div>
   </footer>
 </div>
+
+<dialog class="inquiry-dialog" id="inquiry-dialog" aria-labelledby="inquiry-title">
+  <div class="inquiry-layout">
+    <div class="inquiry-image"><img id="inquiry-photo" src="hero-poster.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async" aria-hidden="true"></div>
+    <div class="inquiry-body">
+      <button class="inquiry-close" type="button" aria-label="Закрити форму" data-inquiry-close><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+      <h2 id="inquiry-title">Допоможемо знайти ваш дім</h2>
+      <p class="inquiry-intro" id="inquiry-intro">Залиште ім’я та телефон, щоб ми могли зв’язатися з вами.</p>
+      <form class="inquiry-form" id="inquiry-form" action="mailto:hello@domora.ua" method="post" enctype="text/plain">
+        <label>Ваше ім’я <input name="clientName" type="text" autocomplete="name" required maxlength="80" placeholder="Як до вас звертатися?"></label>
+        <label>Номер телефону <input name="clientPhone" type="tel" autocomplete="tel" inputmode="tel" required minlength="8" maxlength="25" placeholder="+380 00 000 00 00"></label>
+        <button class="btn btn-primary" type="submit">Підготувати звернення</button>
+        <p class="inquiry-note">Після натискання відкриється ваш поштовий застосунок із заповненим листом. Сайт не зберігає ці дані.</p>
+        <p class="inquiry-status" id="inquiry-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  // Відео контактної плашки не затримує початкове завантаження сторінки.
+  (() => {
+    const video = document.querySelector('.end-background-video');
+    if (!video || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const start = () => {
+      video.src = video.dataset.src;
+      video.load();
+      video.play().catch(() => {}); // Якщо автозапуск заблоковано, видно кадр-заставку.
+    };
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) { start(); observer.disconnect(); }
+      }, { rootMargin:'300px 0px' });
+      observer.observe(video.closest('.site-end'));
+    } else {
+      start();
+    }
+  })();
+</script>
+<script src="inquiry.js" defer></script>
 
 </body>
 </html>
