@@ -1,4 +1,4 @@
-// Let the hero poster and text paint before downloading decorative videos.
+// Start Hero immediately; below-fold decorative media remains lazy.
 (() => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const backgrounds = document.querySelectorAll('.site-footer, .end-cta-media');
@@ -12,29 +12,27 @@
     }), { rootMargin: '300px 0px' });
     backgrounds.forEach(element => observer.observe(element));
   } else backgrounds.forEach(reveal);
-  if (reducedMotion.matches || navigator.connection?.saveData) return;
   const videos = [...document.querySelectorAll('video[data-src]')];
   const visible = new Set();
-  let heroReady = false;
   const play = video => {
     if (document.hidden || reducedMotion.matches || !visible.has(video) || getComputedStyle(video).display === 'none') return;
-    if (video.id === 'bg-video' && !heroReady) return;
+    if (navigator.connection?.saveData) return;
     if (!video.getAttribute('src')) {
       video.src = window.matchMedia('(max-width: 768px)').matches && video.dataset.mobileSrc ? video.dataset.mobileSrc : video.dataset.src;
       video.load();
     }
-    video.play().catch(() => {}); // Poster stays visible if autoplay is blocked.
+    video.play().catch(() => { if (video.id === 'bg-video') video.controls = true; });
   };
   const hero = document.getElementById('bg-video');
   if (hero) {
-    const poster = new Image();
-    poster.onload = poster.onerror = () => requestAnimationFrame(() => requestAnimationFrame(() => {
-      // Give critical fonts time to settle before starting decorative video traffic.
-      const fontsReady = document.fonts.ready;
-      Promise.race([fontsReady, new Promise(resolve => setTimeout(resolve, 2500))])
-        .then(() => setTimeout(() => { heroReady = true; play(hero); }, 1500));
-    }));
-    poster.src = hero.poster;
+    hero.muted = true;
+    const manual = reducedMotion.matches || navigator.connection?.saveData;
+    hero.autoplay = !manual;
+    hero.controls = Boolean(manual);
+    hero.preload = manual ? 'metadata' : 'auto';
+    hero.src = window.matchMedia('(max-width: 768px)').matches && hero.dataset.mobileSrc ? hero.dataset.mobileSrc : hero.dataset.src;
+    visible.add(hero);
+    if (!manual) play(hero);
   }
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
@@ -52,5 +50,6 @@
   });
   reducedMotion.addEventListener('change', () => {
     videos.forEach(video => reducedMotion.matches ? video.pause() : play(video));
+    if (hero) hero.controls = reducedMotion.matches || Boolean(navigator.connection?.saveData);
   });
 })();

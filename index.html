@@ -21,7 +21,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <!-- GA4: вставити тег тут після налаштування аналітики. -->
 <!-- Meta Pixel: вставити тут після налаштування аналітики. -->
-<link rel="preload" as="image" href="hero-poster.webp" fetchpriority="high">
 <link rel="preload" as="style" href="inquiry.css" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="inquiry.css"></noscript>
 
@@ -98,7 +97,7 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; colo
   width: 100%;
   padding: 0;
   overflow: hidden;
-  background: #c7c8d3 url('hero-poster.webp') center / cover no-repeat;
+  background: var(--bg-soft);
   z-index: 1;
 }
 
@@ -108,6 +107,13 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; colo
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display:block;
+}
+
+/* Cover a possible subpixel/encoded dark edge with the next section's color. */
+#hero::before {
+  content:''; position:absolute; left:0; right:0; bottom:0;
+  height:2px; background:var(--bg-soft); pointer-events:none; z-index:2;
 }
 
 #hero::after {
@@ -661,7 +667,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
 
 <main>
 <section id="hero">
-    <video id="bg-video" data-src="hero-video (1).mp4" data-mobile-src="hero-mobile-portrait.mp4" poster="hero-poster.webp" muted loop playsinline preload="none" aria-hidden="true"></video>
+    <video id="bg-video" data-src="hero-video (1).mp4" data-mobile-src="hero-mobile-portrait.mp4" autoplay muted loop playsinline preload="auto" aria-label="Відео сучасного будинку біля моря"></video>
 
     <div id="hero-content">
       <h1 class="hero-title">
