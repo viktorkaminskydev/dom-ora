@@ -19,7 +19,7 @@
       subject = cardTitle ? `Запит щодо ${cardTitle}` : isBooking ? 'Запис на перегляд' : 'Консультація щодо нерухомості';
       title.textContent = cardTitle ? `Запитати про ${cardTitle}` : isBooking ? 'Забронювати перегляд' : 'Допоможемо знайти ваш дім';
       intro.textContent = 'Залиште ім’я та телефон, щоб ми могли зв’язатися з вами.';
-      photo.src = cardImage || 'hero-poster.jpg';
+      photo.src = cardImage || 'hero-poster.webp';
       form.reset();
       status.textContent = '';
       dialog.showModal();

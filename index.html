@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&amp;family=Nata+Sans:wght@400;500;600;700&amp;family=Scada:wght@400&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&amp;family=Nata+Sans:wght@400;500;600;700&amp;family=Scada:wght@400&amp;display=swap"></noscript>
-<link rel="preload" as="image" href="hero-poster.jpg">
+<link rel="preload" as="image" href="hero-poster.webp" fetchpriority="high">
 <link rel="stylesheet" href="inquiry.css">
 
 <style>
@@ -87,7 +87,7 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; colo
   width: 100%;
   padding: 0;
   overflow: hidden;
-  background: #c7c8d3 url('hero-poster.jpg') center / cover no-repeat;
+  background: #c7c8d3 url('hero-poster.webp') center / cover no-repeat;
   z-index: 1;
 }
 
@@ -445,7 +445,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
   padding-inline:28px;
   white-space:nowrap;
 }
-.end-cta-media { position:absolute; inset:0; z-index:0; background:#25251e url('footer-poster.jpg') center/cover no-repeat; }
+.end-cta-media { position:absolute; inset:0; z-index:0; background:#25251e url('footer-poster.webp') center/cover no-repeat; }
 .end-background-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; pointer-events:none; }
 .site-footer {
   --end-muted:#e2dfd6;
@@ -456,7 +456,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
   padding:40px 0 0;
   border-top:1px solid rgba(255,255,255,.12);
   background-color:#0b0b0b;
-  background-image:linear-gradient(180deg,rgba(5,8,6,.58),rgba(5,8,6,.67) 58%,rgba(5,8,6,.78)),url('Editing_nature_background_image_2K_20260926223842.jpg');
+  background-image:linear-gradient(180deg,rgba(5,8,6,.58),rgba(5,8,6,.67) 58%,rgba(5,8,6,.78)),url('footer-desktop.webp');
   background-size:cover;
   background-position:center bottom;
   background-repeat:no-repeat;
@@ -511,7 +511,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
 
 @media (max-width:768px) {
   .site-footer {
-    background-image:linear-gradient(180deg,rgba(5,8,6,.60),rgba(5,8,6,.68) 58%,rgba(5,8,6,.80)),url('Sunrise_over_misty_green_hill_2K_20260926224355.jpg');
+    background-image:linear-gradient(180deg,rgba(5,8,6,.60),rgba(5,8,6,.68) 58%,rgba(5,8,6,.80)),url('footer-mobile.webp');
     /* У файлі є затемнені бокові поля: масштабуємо центральний вертикальний кадр на всю ширину. */
     background-size:cover, 360% auto;
     background-position:center, center 20%;
@@ -646,7 +646,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
 
 <main>
 <section id="hero">
-    <video id="bg-video" src="hero-video (1).mp4" poster="hero-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+    <video id="bg-video" data-src="hero-video (1).mp4" poster="hero-poster.webp" muted loop playsinline preload="none" aria-hidden="true"></video>
 
     <div id="hero-content">
       <h1 class="hero-title">
@@ -673,22 +673,22 @@ section { padding: clamp(70px,10vw,120px) 0; }
     </div>
     <div class="cat-grid">
       <a class="cat-card" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про квартири">
-        <img src="https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="1200" alt="Світла сучасна вітальня квартири" loading="lazy" decoding="async">
+        <img src="https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="1200" alt="Світла сучасна вітальня квартири" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px">
         <span class="num">01</span>
         <div class="cat-content"><h3>Квартири</h3><p>Від студій до просторих пентхаусів у центрі та нових районах.</p></div>
       </a>
       <a class="cat-card" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про будинки">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="1200" alt="Сучасний будинок з великими вікнами та ділянкою" loading="lazy" decoding="async">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="1200" alt="Сучасний будинок з великими вікнами та ділянкою" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px">
         <span class="num">02</span>
         <div class="cat-content"><h3>Будинки</h3><p>Приватні садиби та сучасні котеджі з ділянкою.</p></div>
       </a>
       <a class="cat-card" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про комерційну нерухомість">
-        <img src="https://images.unsplash.com/photo-1767331290386-de84a43d7c49?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="1200" alt="Світлий сучасний офісний простір" loading="lazy" decoding="async">
+        <img src="https://images.unsplash.com/photo-1767331290386-de84a43d7c49?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="1200" alt="Світлий сучасний офісний простір" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1767331290386-de84a43d7c49?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1767331290386-de84a43d7c49?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1767331290386-de84a43d7c49?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px">
         <span class="num">03</span>
         <div class="cat-content"><h3>Комерція</h3><p>Приміщення під офіс, торгівлю чи сервіс у прохідних локаціях.</p></div>
       </a>
       <a class="cat-card" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про ділянки">
-        <img src="https://images.unsplash.com/photo-1661945472439-afd06062cf27?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="1200" alt="Зелений карпатський ландшафт із відкритим простором" loading="lazy" decoding="async">
+        <img src="https://images.unsplash.com/photo-1661945472439-afd06062cf27?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="1200" alt="Зелений карпатський ландшафт із відкритим простором" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1661945472439-afd06062cf27?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1661945472439-afd06062cf27?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1661945472439-afd06062cf27?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px">
         <span class="num">04</span>
         <div class="cat-content"><h3>Ділянки</h3><p>Земля під будівництво з готовими комунікаціями поруч.</p></div>
       </a>
@@ -706,42 +706,42 @@ section { padding: clamp(70px,10vw,120px) 0; }
     </div>
     <div class="listing-grid">
       <article class="listing-card"><a class="listing-link" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про Віллу Панорама">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1667830501890-f18c74a8efac?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Будинок з басейном та панорамним склінням увечері" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1667830501890-f18c74a8efac?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Будинок з басейном та панорамним склінням увечері" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1667830501890-f18c74a8efac?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1667830501890-f18c74a8efac?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1667830501890-f18c74a8efac?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="listing-info">
           <div class="top-row"><h3>Вілла Панорама</h3><span class="price">4,1 млн ₴</span></div>
           <div class="meta"><span>180 м²</span><span>4 кімнати</span><span>Мукачево</span></div>
         </div>
       </a></article>
       <article class="listing-card"><a class="listing-link" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про Лофт на Корзо">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Сучасна вітальня з каміном і теплим освітленням" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Сучасна вітальня з каміном і теплим освітленням" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1758915753332-cab59126742c?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="listing-info">
           <div class="top-row"><h3>Лофт на Корзо</h3><span class="price">2,3 млн ₴</span></div>
           <div class="meta"><span>76 м²</span><span>2 кімнати</span><span>Ужгород</span></div>
         </div>
       </a></article>
       <article class="listing-card"><a class="listing-link" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про Хату біля лісу">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1642447260162-8d52ac4348ad?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Заміський будинок з підсвіткою у сутінках" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1642447260162-8d52ac4348ad?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Заміський будинок з підсвіткою у сутінках" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1642447260162-8d52ac4348ad?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1642447260162-8d52ac4348ad?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1642447260162-8d52ac4348ad?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="listing-info">
           <div class="top-row"><h3>Хата біля лісу</h3><span class="price">1,8 млн ₴</span></div>
           <div class="meta"><span>95 м²</span><span>3 кімнати</span><span>Свалява</span></div>
         </div>
       </a></article>
       <article class="listing-card"><a class="listing-link" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про Віллу Аврора">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Білий сучасний будинок з великими вікнами" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Білий сучасний будинок з великими вікнами" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="listing-info">
           <div class="top-row"><h3>Вілла Аврора</h3><span class="price">3,6 млн ₴</span></div>
           <div class="meta"><span>160 м²</span><span>4 кімнати</span><span>Берегове</span></div>
         </div>
       </a></article>
       <article class="listing-card"><a class="listing-link" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про Апартаменти Дубова">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Простора вітальня з дерев'яними елементами" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Простора вітальня з дерев'яними елементами" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="listing-info">
           <div class="top-row"><h3>Апартаменти Дубова</h3><span class="price">2,1 млн ₴</span></div>
           <div class="meta"><span>64 м²</span><span>2 кімнати</span><span>Виноградів</span></div>
         </div>
       </a></article>
       <article class="listing-card"><a class="listing-link" href="mailto:hello@domora.ua" data-inquiry aria-label="Запитати про Садибу Панорама">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Будинок з басейном та терасою вдень" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&amp;fit=crop&amp;w=900&amp;q=80" width="900" height="675" alt="Будинок з басейном та терасою вдень" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w, https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&amp;fit=crop&amp;w=900&amp;q=80 900w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="listing-info">
           <div class="top-row"><h3>Садиба Панорама</h3><span class="price">5,2 млн ₴</span></div>
           <div class="meta"><span>210 м²</span><span>5 кімнат</span><span>Хуст</span></div>
@@ -761,7 +761,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
     <div class="testi-grid">
       <article class="testi-card">
         <div class="testi-photo">
-          <img class="property-photo" src="https://images.unsplash.com/photo-1703782997454-8eb0d4d94e9c?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" width="1200" height="800" alt="Дерев'яний будинок серед дерев" loading="lazy" decoding="async">
+          <img class="property-photo" src="https://images.unsplash.com/photo-1703782997454-8eb0d4d94e9c?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" width="1200" height="800" alt="Дерев'яний будинок серед дерев" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1703782997454-8eb0d4d94e9c?auto=format&amp;fit=crop&amp;w=400&amp;q=82 400w, https://images.unsplash.com/photo-1703782997454-8eb0d4d94e9c?auto=format&amp;fit=crop&amp;w=800&amp;q=82 800w, https://images.unsplash.com/photo-1703782997454-8eb0d4d94e9c?auto=format&amp;fit=crop&amp;w=1200&amp;q=82 1200w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px">
           <div class="testi-top">
             <div class="who">
               <div class="ph"><img src="https://images.unsplash.com/photo-1663550910287-0c92a030feab?auto=format&amp;fit=crop&amp;w=160&amp;h=160&amp;q=82&amp;crop=faces" width="160" height="160" alt="Ілюстративний портрет жінки" loading="lazy" decoding="async"></div>
@@ -778,7 +778,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
 
       <article class="testi-card">
         <div class="testi-photo">
-          <img class="property-photo" src="https://images.unsplash.com/photo-1757356664215-4302d5b4a92d?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" width="1200" height="800" alt="Сучасний будинок у зеленому саду ввечері" loading="lazy" decoding="async">
+          <img class="property-photo" src="https://images.unsplash.com/photo-1757356664215-4302d5b4a92d?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" width="1200" height="800" alt="Сучасний будинок у зеленому саду ввечері" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1757356664215-4302d5b4a92d?auto=format&amp;fit=crop&amp;w=400&amp;q=82 400w, https://images.unsplash.com/photo-1757356664215-4302d5b4a92d?auto=format&amp;fit=crop&amp;w=800&amp;q=82 800w, https://images.unsplash.com/photo-1757356664215-4302d5b4a92d?auto=format&amp;fit=crop&amp;w=1200&amp;q=82 1200w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px">
           <div class="testi-top">
             <div class="who">
               <div class="ph"><img src="https://images.unsplash.com/photo-1534399315465-2b91232de345?auto=format&amp;fit=crop&amp;w=160&amp;h=160&amp;q=82&amp;crop=faces" width="160" height="160" alt="Ілюстративний портрет чоловіка" loading="lazy" decoding="async"></div>
@@ -795,7 +795,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
 
       <article class="testi-card">
         <div class="testi-photo">
-          <img class="property-photo" src="https://images.unsplash.com/photo-1704457031745-fe39ed2d296c?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" width="1200" height="800" alt="Сучасний дерев'яний будинок із садом" loading="lazy" decoding="async">
+          <img class="property-photo" src="https://images.unsplash.com/photo-1704457031745-fe39ed2d296c?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" width="1200" height="800" alt="Сучасний дерев'яний будинок із садом" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1704457031745-fe39ed2d296c?auto=format&amp;fit=crop&amp;w=400&amp;q=82 400w, https://images.unsplash.com/photo-1704457031745-fe39ed2d296c?auto=format&amp;fit=crop&amp;w=800&amp;q=82 800w, https://images.unsplash.com/photo-1704457031745-fe39ed2d296c?auto=format&amp;fit=crop&amp;w=1200&amp;q=82 1200w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px">
           <div class="testi-top">
             <div class="who">
               <div class="ph"><img src="https://images.unsplash.com/photo-1548382131-e0ebb1f0cdea?auto=format&amp;fit=crop&amp;w=160&amp;h=160&amp;q=82&amp;crop=faces" width="160" height="160" alt="Ілюстративний портрет жінки" loading="lazy" decoding="async"></div>
@@ -876,7 +876,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
     </div>
     <div class="team-grid">
       <article class="team-card">
-        <img src="team-olena-pexels.jpg" width="1200" height="1500" alt="Стокове фото жінки в світлому жакеті" loading="lazy" decoding="async">
+        <img src="team-olena.webp" width="1200" height="1500" alt="Стокове фото жінки в світлому жакеті" loading="lazy" decoding="async">
         <div class="team-info">
           <span class="role">Перша розмова</span>
           <h3>Олена М.</h3>
@@ -884,7 +884,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
         </div>
       </article>
       <article class="team-card">
-        <img src="team-andrii-pexels.jpg" width="1200" height="1800" alt="Стокове фото чоловіка в костюмі" loading="lazy" decoding="async">
+        <img src="team-andrii.webp" width="1200" height="1800" alt="Стокове фото чоловіка в костюмі" loading="lazy" decoding="async">
         <div class="team-info">
           <span class="role">Підбір і перегляди</span>
           <h3>Андрій К.</h3>
@@ -892,7 +892,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
         </div>
       </article>
       <article class="team-card">
-        <img src="team-mariia-pexels.jpg" width="1200" height="1800" alt="Стокове фото жінки з планшетом для записів" loading="lazy" decoding="async">
+        <img src="team-mariia.webp" width="1200" height="1800" alt="Стокове фото жінки з планшетом для записів" loading="lazy" decoding="async">
         <div class="team-info">
           <span class="role">Документи й угода</span>
           <h3>Марія С.</h3>
@@ -917,7 +917,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
           <a href="mailto:hello@domora.ua" class="end-cta-link" data-inquiry>Отримати консультацію</a>
         </div>
         <div class="end-cta-media">
-          <video class="end-background-video" autoplay muted loop playsinline preload="none" poster="footer-poster.jpg" aria-hidden="true" data-src="https://res.cloudinary.com/e0jqfgj9/video/upload/v1790438062/hailuo-03_Subtle_motion_photorealistic._The_family_walks_slowly_towards_the_water._The_tre-0_1.mp4"></video>
+          <video class="end-background-video" autoplay muted loop playsinline preload="none" poster="footer-poster.webp" aria-hidden="true" data-src="https://res.cloudinary.com/e0jqfgj9/video/upload/v1790438062/hailuo-03_Subtle_motion_photorealistic._The_family_walks_slowly_towards_the_water._The_tre-0_1.mp4"></video>
         </div>
       </div>
     </div>
@@ -968,7 +968,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
 
 <dialog class="inquiry-dialog" id="inquiry-dialog" aria-labelledby="inquiry-title">
   <div class="inquiry-layout">
-    <div class="inquiry-image"><img id="inquiry-photo" src="hero-poster.jpg" width="1280" height="720" alt="" aria-hidden="true"></div>
+    <div class="inquiry-image"><img id="inquiry-photo" src="hero-poster.webp" width="1280" height="720" alt="" aria-hidden="true"></div>
     <div class="inquiry-body">
       <button class="inquiry-close" type="button" aria-label="Закрити форму" data-inquiry-close><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
       <h2 id="inquiry-title">Допоможемо знайти ваш дім</h2>
@@ -984,26 +984,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
   </div>
 </dialog>
 
-<script>
-  // Відео контактної плашки завантажується лише тоді, коли секція наближається до екрана.
-  (() => {
-    const video = document.querySelector('.end-background-video');
-    if (!video || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const start = () => {
-      video.src = video.dataset.src;
-      video.load();
-      video.play().catch(() => {}); // Якщо автозапуск заблоковано, видно кадр-заставку.
-    };
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) { start(); observer.disconnect(); }
-      }, { rootMargin:'300px 0px' });
-      observer.observe(video.closest('.site-end'));
-    } else {
-      start();
-    }
-  })();
-</script>
+<script src="media.js" defer></script>
 <script src="inquiry.js" defer></script>
 </body>
 </html>

@@ -20,7 +20,8 @@
 <!-- Meta Pixel: вставити тут після налаштування аналітики. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&amp;family=Nata+Sans:wght@400;500;600;700&amp;family=Scada:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&amp;family=Nata+Sans:wght@400;500;600;700&amp;family=Scada:wght@400&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&amp;family=Nata+Sans:wght@400;500;600;700&amp;family=Scada:wght@400&amp;display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="inquiry.css">
 <style>
   :root{
@@ -297,7 +298,7 @@
   .end-cta-link{
     padding-inline:28px; white-space:nowrap;
   }
-  .end-cta-media{ position:absolute; inset:0; z-index:0; background:#25251e url('footer-poster.jpg') center/cover no-repeat; }
+  .end-cta-media{ position:absolute; inset:0; z-index:0; background:#25251e url('footer-poster.webp') center/cover no-repeat; }
   .end-background-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; pointer-events:none; }
   .site-footer{
     --end-muted:#e2dfd6;
@@ -305,7 +306,7 @@
     margin-top:40px; padding:40px 0 0;
     border-top:1px solid rgba(255,255,255,.12);
     background-color:#0b0b0b;
-    background-image:linear-gradient(180deg,rgba(5,8,6,.58),rgba(5,8,6,.67) 58%,rgba(5,8,6,.78)),url('Editing_nature_background_image_2K_20260926223842.jpg');
+    background-image:linear-gradient(180deg,rgba(5,8,6,.58),rgba(5,8,6,.67) 58%,rgba(5,8,6,.78)),url('footer-desktop.webp');
     background-size:cover;
     background-position:center bottom;
     background-repeat:no-repeat;
@@ -345,7 +346,7 @@
 
   @media (max-width:768px){
     .site-footer{
-      background-image:linear-gradient(180deg,rgba(5,8,6,.60),rgba(5,8,6,.68) 58%,rgba(5,8,6,.80)),url('Sunrise_over_misty_green_hill_2K_20260926224355.jpg');
+      background-image:linear-gradient(180deg,rgba(5,8,6,.60),rgba(5,8,6,.68) 58%,rgba(5,8,6,.80)),url('footer-mobile.webp');
       /* У файлі є затемнені бокові поля: масштабуємо центральний вертикальний кадр на всю ширину. */
       background-size:cover, 360% auto;
       background-position:center, center 20%;
@@ -479,7 +480,7 @@
     <h2 class="sr-only">Статті блогу</h2>
     <div class="full-blog-grid">
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1763729805496-b5dbf7f00c79?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Підписання документів на нерухомість" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1763729805496-b5dbf7f00c79?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Підписання документів на нерухомість" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1763729805496-b5dbf7f00c79?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1763729805496-b5dbf7f00c79?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="body">
           <span class="tag">Юридичні поради</span>
           <h3>5 документів, які варто перевірити перед покупкою</h3>
@@ -487,7 +488,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1728825445493-1a6e89164511?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Калькулятор та макет будинку для розрахунку іпотеки" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1728825445493-1a6e89164511?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Калькулятор та макет будинку для розрахунку іпотеки" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1728825445493-1a6e89164511?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1728825445493-1a6e89164511?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="body">
           <span class="tag">Фінанси</span>
           <h3>Як порахувати реальну вартість іпотеки</h3>
@@ -495,7 +496,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1637119106192-036fbe26d38d?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Вигляд на житловий район з висоти" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1637119106192-036fbe26d38d?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Вигляд на житловий район з висоти" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1637119106192-036fbe26d38d?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1637119106192-036fbe26d38d?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="body">
           <span class="tag">Огляди районів</span>
           <h3>Де в Ужгороді варто шукати квартиру в 2026</h3>
@@ -503,7 +504,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1733244766159-f58f4184fd38?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Ключ у дверях під час першого перегляду об'єкта" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1733244766159-f58f4184fd38?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Ключ у дверях під час першого перегляду об'єкта" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1733244766159-f58f4184fd38?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1733244766159-f58f4184fd38?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="body">
           <span class="tag">Перед покупкою</span>
           <h3>Що перевірити під час першого перегляду об'єкта</h3>
@@ -511,7 +512,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1747037941864-74595e4ff56d?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Ключі, гроші та мініатюрні будинки" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1747037941864-74595e4ff56d?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Ключі, гроші та мініатюрні будинки" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1747037941864-74595e4ff56d?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1747037941864-74595e4ff56d?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="body">
           <span class="tag">Аналітика</span>
           <h3>Оренда чи покупка: як порахувати, що вигідніше саме вам</h3>
@@ -519,7 +520,7 @@
         </div>
       </div>
       <div class="blog-card glass">
-        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1604177420682-0c840feb01de?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Електролічильник у будинку" loading="lazy" decoding="async"></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1604177420682-0c840feb01de?auto=format&amp;fit=crop&amp;w=700&amp;q=80" width="700" height="438" alt="Електролічильник у будинку" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1604177420682-0c840feb01de?auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1604177420682-0c840feb01de?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 50vw, 400px"></div>
         <div class="body">
           <span class="tag">Утримання</span>
           <h3>Комунальні платежі та приховані витрати на утримання будинку</h3>
@@ -543,7 +544,7 @@
           <a href="mailto:hello@domora.ua" class="end-cta-link" data-inquiry>Отримати консультацію</a>
         </div>
         <div class="end-cta-media">
-          <video class="end-background-video" autoplay muted loop playsinline preload="none" poster="footer-poster.jpg" aria-hidden="true" data-src="https://res.cloudinary.com/e0jqfgj9/video/upload/v1790438062/hailuo-03_Subtle_motion_photorealistic._The_family_walks_slowly_towards_the_water._The_tre-0_1.mp4"></video>
+          <video class="end-background-video" autoplay muted loop playsinline preload="none" poster="footer-poster.webp" aria-hidden="true" data-src="https://res.cloudinary.com/e0jqfgj9/video/upload/v1790438062/hailuo-03_Subtle_motion_photorealistic._The_family_walks_slowly_towards_the_water._The_tre-0_1.mp4"></video>
         </div>
       </div>
     </div>
@@ -594,7 +595,7 @@
 
 <dialog class="inquiry-dialog" id="inquiry-dialog" aria-labelledby="inquiry-title">
   <div class="inquiry-layout">
-    <div class="inquiry-image"><img id="inquiry-photo" src="hero-poster.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async" aria-hidden="true"></div>
+    <div class="inquiry-image"><img id="inquiry-photo" src="hero-poster.webp" width="1280" height="720" alt="" loading="lazy" decoding="async" aria-hidden="true"></div>
     <div class="inquiry-body">
       <button class="inquiry-close" type="button" aria-label="Закрити форму" data-inquiry-close><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
       <h2 id="inquiry-title">Допоможемо знайти ваш дім</h2>
@@ -610,26 +611,7 @@
   </div>
 </dialog>
 
-<script>
-  // Відео контактної плашки не затримує початкове завантаження сторінки.
-  (() => {
-    const video = document.querySelector('.end-background-video');
-    if (!video || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const start = () => {
-      video.src = video.dataset.src;
-      video.load();
-      video.play().catch(() => {}); // Якщо автозапуск заблоковано, видно кадр-заставку.
-    };
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) { start(); observer.disconnect(); }
-      }, { rootMargin:'300px 0px' });
-      observer.observe(video.closest('.site-end'));
-    } else {
-      start();
-    }
-  })();
-</script>
+<script src="media.js" defer></script>
 <script src="inquiry.js" defer></script>
 
 </body>
