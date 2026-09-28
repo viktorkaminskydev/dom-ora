@@ -1,0 +1,11 @@
+.hero-title { position:relative; }
+.hero-title .tech-glyph { color:inherit; font:inherit; letter-spacing:inherit; }
+.hero-title .tech-text-canvas {
+  position:absolute; inset:-32px; width:calc(100% + 64px); height:calc(100% + 64px);
+  display:block; visibility:hidden; pointer-events:none;
+}
+.hero-title.tech-ready .tech-glyph { visibility:hidden; }
+@media (prefers-reduced-motion:reduce) {
+  .hero-title.tech-ready .tech-glyph { visibility:visible; }
+  .hero-title .tech-text-canvas { display:none; }
+}
