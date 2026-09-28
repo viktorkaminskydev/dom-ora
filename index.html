@@ -2,6 +2,9 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<link rel="preload" as="font" href="scada-cyrillic.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="nata-cyrillic.woff2" type="font/woff2" crossorigin>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <!-- TODO: замінити на окрему PNG-іконку 180×180 для iOS, коли вона буде готова. -->
@@ -18,14 +21,20 @@
 <meta name="twitter:card" content="summary_large_image">
 <!-- GA4: вставити тег тут після налаштування аналітики. -->
 <!-- Meta Pixel: вставити тут після налаштування аналітики. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&amp;family=Nata+Sans:wght@400;500;600;700&amp;family=Scada:wght@400&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&amp;family=Nata+Sans:wght@400;500;600;700&amp;family=Scada:wght@400&amp;display=swap"></noscript>
 <link rel="preload" as="image" href="hero-poster.webp" fetchpriority="high">
-<link rel="stylesheet" href="inquiry.css">
+<link rel="preload" as="style" href="inquiry.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="inquiry.css"></noscript>
 
 <style>
+/* Unmodified Google Fonts WOFF2 subsets. See bundled LICENSE-*.txt files. */
+@font-face{font-family:'Scada';font-style:normal;font-weight:400;font-display:swap;src:url('scada-cyrillic.woff2') format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Scada';font-style:normal;font-weight:400;font-display:swap;src:url('scada-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Nata Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('nata-cyrillic.woff2') format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Nata Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('nata-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Montserrat Alternates';font-style:normal;font-weight:700;font-display:swap;src:url('montserrat-cyrillic.woff2') format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Montserrat Alternates';font-style:normal;font-weight:700;font-display:swap;src:url('montserrat-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+.site-footer.media-ready{background-image:var(--footer-image)}
+.end-cta-media.media-ready{background:var(--cta-background)}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -445,7 +454,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
   padding-inline:28px;
   white-space:nowrap;
 }
-.end-cta-media { position:absolute; inset:0; z-index:0; background:#25251e url('footer-poster.webp') center/cover no-repeat; }
+.end-cta-media { position:absolute; inset:0; z-index:0; --cta-background:#25251e url('footer-poster.webp') center/cover no-repeat; }
 .end-background-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; pointer-events:none; }
 .site-footer {
   --end-muted:#e2dfd6;
@@ -456,7 +465,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
   padding:40px 0 0;
   border-top:1px solid rgba(255,255,255,.12);
   background-color:#0b0b0b;
-  background-image:linear-gradient(180deg,rgba(5,8,6,.58),rgba(5,8,6,.67) 58%,rgba(5,8,6,.78)),url('footer-desktop.webp');
+  --footer-image:linear-gradient(180deg,rgba(5,8,6,.58),rgba(5,8,6,.67) 58%,rgba(5,8,6,.78)),url('footer-desktop.webp');
   background-size:cover;
   background-position:center bottom;
   background-repeat:no-repeat;
@@ -511,7 +520,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
 
 @media (max-width:768px) {
   .site-footer {
-    background-image:linear-gradient(180deg,rgba(5,8,6,.60),rgba(5,8,6,.68) 58%,rgba(5,8,6,.80)),url('footer-mobile.webp');
+    --footer-image:linear-gradient(180deg,rgba(5,8,6,.60),rgba(5,8,6,.68) 58%,rgba(5,8,6,.80)),url('footer-mobile.webp');
     /* У файлі є затемнені бокові поля: масштабуємо центральний вертикальний кадр на всю ширину. */
     background-size:cover, 360% auto;
     background-position:center, center 20%;
@@ -598,6 +607,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
   .testi-card .who .ph { width:42px; height:42px; }
 }
 </style>
+<noscript><style>.site-footer{background-image:var(--footer-image)}.end-cta-media{background:var(--cta-background)}</style></noscript>
 </head>
 <body>
 
@@ -646,7 +656,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
 
 <main>
 <section id="hero">
-    <video id="bg-video" data-src="hero-video (1).mp4" poster="hero-poster.webp" muted loop playsinline preload="none" aria-hidden="true"></video>
+    <video id="bg-video" data-src="hero-video (1).mp4" data-mobile-src="hero-mobile-portrait.mp4" poster="hero-poster.webp" muted loop playsinline preload="none" aria-hidden="true"></video>
 
     <div id="hero-content">
       <h1 class="hero-title">
@@ -917,7 +927,7 @@ section { padding: clamp(70px,10vw,120px) 0; }
           <a href="mailto:hello@domora.ua" class="end-cta-link" data-inquiry>Отримати консультацію</a>
         </div>
         <div class="end-cta-media">
-          <video class="end-background-video" autoplay muted loop playsinline preload="none" poster="footer-poster.webp" aria-hidden="true" data-src="https://res.cloudinary.com/e0jqfgj9/video/upload/v1790438062/hailuo-03_Subtle_motion_photorealistic._The_family_walks_slowly_towards_the_water._The_tre-0_1.mp4"></video>
+          <video class="end-background-video" autoplay muted loop playsinline preload="none" data-poster="footer-poster.webp" aria-hidden="true" data-src="https://res.cloudinary.com/e0jqfgj9/video/upload/v1790438062/hailuo-03_Subtle_motion_photorealistic._The_family_walks_slowly_towards_the_water._The_tre-0_1.mp4"></video>
         </div>
       </div>
     </div>
