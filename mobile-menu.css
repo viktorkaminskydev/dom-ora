@@ -11,18 +11,8 @@
   padding:10px 18px; border-radius:28px;
   background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
   font-size:clamp(1rem,4.3vw,1.2rem); line-height:1.25;
-  transition:background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 .mobile-menu a[aria-current]:not(.btn) { background:var(--accent); color:#1a1408; }
-.mobile-menu a:not(.btn):focus-visible {
-  background:var(--accent); color:#1a1408; border-color:var(--accent);
-}
-/* Only pointer devices get hover, so touch screens do not retain it after a tap. */
-@media (hover:hover) and (pointer:fine) {
-  .mobile-menu a:not(.btn):hover {
-    background:var(--accent); color:#1a1408; border-color:var(--accent);
-  }
-}
 .mobile-menu a { transform-origin:center; }
 .mobile-menu a:focus-visible, .mobile-menu .close:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
 .mobile-menu .close { display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(255,255,255,.07); }
@@ -37,6 +27,5 @@
 }
 @media (prefers-reduced-motion:reduce) {
   .mobile-menu { transition:none; }
-  .mobile-menu a:not(.btn) { transition:none; }
   .mobile-menu.open a { animation:none; }
 }

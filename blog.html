@@ -442,6 +442,7 @@
   @media (max-width:1000px){ .full-blog-grid{ grid-template-columns:repeat(2,1fr); } }
   @media (max-width:600px){ .full-blog-grid{ grid-template-columns:1fr; } }
 </style>
+<link rel="stylesheet" href="mobile-menu.css">
 </head>
 <body>
 
@@ -466,26 +467,26 @@
       </ul>
     </nav>
     <a href="mailto:hello@domora.ua" class="btn btn-primary desktop-only" data-inquiry>Отримати консультацію</a>
-    <button class="burger" aria-label="Відкрити меню" onclick="document.getElementById('mmenu').classList.add('open')">
+    <button class="burger" aria-label="Відкрити меню">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
 </header>
 
 <nav class="mobile-menu" id="mmenu" aria-label="Мобільна навігація">
-  <button class="close" aria-label="Закрити меню" onclick="document.getElementById('mmenu').classList.remove('open')">
+  <button class="close" aria-label="Закрити меню">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;margin:auto;"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
   </button>
-  <a href="index.html#hero" onclick="document.getElementById('mmenu').classList.remove('open')">Головна</a>
-  <a href="index.html#categories" onclick="document.getElementById('mmenu').classList.remove('open')">Категорії</a>
-  <a href="index.html#listings" onclick="document.getElementById('mmenu').classList.remove('open')">Об'єкти</a>
-  <a href="index.html#testimonials" onclick="document.getElementById('mmenu').classList.remove('open')">Відгуки</a>
-  <a href="index.html#about-stats" onclick="document.getElementById('mmenu').classList.remove('open')">Dom ora у цифрах</a>
-  <a href="index.html#process" onclick="document.getElementById('mmenu').classList.remove('open')">Як це працює</a>
-  <a href="index.html#team" onclick="document.getElementById('mmenu').classList.remove('open')">Команда</a>
-  <a href="blog.html" aria-current="page" onclick="document.getElementById('mmenu').classList.remove('open')">Блог</a>
-  <a href="#contact" onclick="document.getElementById('mmenu').classList.remove('open')">Контакти</a>
-  <a href="mailto:hello@domora.ua" class="btn btn-primary" data-inquiry onclick="document.getElementById('mmenu').classList.remove('open')">Отримати консультацію</a>
+  <a href="index.html#hero">Головна</a>
+  <a href="index.html#categories">Категорії</a>
+  <a href="index.html#listings">Об'єкти</a>
+  <a href="index.html#testimonials">Відгуки</a>
+  <a href="index.html#about-stats">Dom ora у цифрах</a>
+  <a href="index.html#process">Як це працює</a>
+  <a href="index.html#team">Команда</a>
+  <a href="blog.html" aria-current="page">Блог</a>
+  <a href="#contact">Контакти</a>
+  <a href="mailto:hello@domora.ua" class="btn btn-primary" data-inquiry>Отримати консультацію</a>
 </nav>
 
 <main>
@@ -634,6 +635,7 @@
   </div>
 </dialog>
 
+<script src="mobile-menu.js" defer></script>
 <script src="media.js" defer></script>
 <script src="inquiry.js" defer></script>
 
