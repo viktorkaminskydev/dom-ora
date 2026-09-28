@@ -8,6 +8,8 @@
   const photo = document.getElementById('inquiry-photo');
   const status = document.getElementById('inquiry-status');
   let subject = 'Консультація щодо нерухомості';
+  let previousOverflow = '';
+  let opener;
 
   document.querySelectorAll('[data-inquiry]').forEach(trigger => {
     trigger.addEventListener('click', event => {
@@ -22,13 +24,30 @@
       photo.src = cardImage || 'hero-poster.webp';
       form.reset();
       status.textContent = '';
+      opener = trigger;
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
       dialog.showModal();
-      form.elements.clientName.focus();
+      dialog.scrollTop = 0;
+      // On phones show the photo first, without immediately opening the keyboard.
+      if (matchMedia('(max-width:640px)').matches) {
+        dialog.querySelector('[data-inquiry-close]').focus({preventScroll:true});
+      } else {
+        form.elements.clientName.focus({preventScroll:true});
+      }
     });
   });
 
   dialog.querySelector('[data-inquiry-close]').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const rect = dialog.getBoundingClientRect();
+    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    document.body.style.overflow = previousOverflow;
+    opener?.focus({preventScroll:true});
+  });
 
   form.addEventListener('submit', event => {
     event.preventDefault();
